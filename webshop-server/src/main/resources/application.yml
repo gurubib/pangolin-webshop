@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: webshop
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: create
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:
+      hibernate:
+        default_schema: pangolin
+        generate_statistics: false
+        jdbc:
+          time_zone: UTC
+          lob:
+            non_contextual_creation: true
+        connection:
+          characterEncoding: utf-8
+          CharSet: utf-8
+          useUnicode: true
+    open-in-view: false
+  datasource:
+    username: postgres
+    password: mysecretpassword
+    url: jdbc:postgresql://localhost:5432/pangolin
+    driver-class-name: org.postgresql.Driver
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    root: info
+    hu: debug
+
+pangolin:
+  admin:
+    username: root
+    password: 12345678
+    email: admin@admin.hu
+  roles:
+    admin: ROLE_ADMIN
+    user: ROLE_USER

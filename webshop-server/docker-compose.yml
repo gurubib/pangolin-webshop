@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  pangolin-db:
+    image: 'postgres:12.1'
+    container_name: pangolin-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USERNAME: postgres
+      POSTGRES_SCHEMA: pangolin
+      POSTGRES_DB: pangolin
+    ports:
+      - '5432:5432'  
+
