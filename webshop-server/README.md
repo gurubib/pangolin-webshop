@@ -4,8 +4,13 @@
 **To stop database:**  
 `docker-compose down`
   
-**To start application:**  
+**To build the application**
 `mvn clean install`
+
+**To start application: (build before this)**  
+`mvn spring-boot:run`
+
+*Note*: If you don't have mvn installed, use the provided **mvnw or mvnw.bat**
   
 **To stop application:**  
 `ctrl + c` in the console window  
