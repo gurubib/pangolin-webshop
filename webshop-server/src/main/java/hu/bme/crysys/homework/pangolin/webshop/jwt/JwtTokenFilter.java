@@ -11,7 +11,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import hu.bme.crysys.homework.pangolin.webshop.model.BlackListedJwt;
@@ -28,7 +28,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             throws IOException, ServletException {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
 
-        blackListedJwtRepository.deleteByExpireDateBefore(LocalDate.now());
+        blackListedJwtRepository.deleteByExpireDateBefore(LocalDateTime.now());
         List<BlackListedJwt> blackListedTokens = blackListedJwtRepository.findByTokenEquals(token);
 
         if (token != null && jwtTokenProvider.validateToken(token) && blackListedTokens.isEmpty()) {

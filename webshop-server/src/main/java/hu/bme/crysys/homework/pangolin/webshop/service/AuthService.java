@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.ValidationException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,7 +84,7 @@ public class AuthService {
         }
 
         // The token has to be expired by this time.
-        LocalDate expireDate = LocalDate.now().plus(tokenConfiguration.getExpireLength(), ChronoUnit.MILLIS);
+        LocalDateTime expireDate = LocalDateTime.now().plus(Duration.ofMillis(tokenConfiguration.getExpireLength()));
 
         BlackListedJwt jwtToBlackListed = new BlackListedJwt();
         jwtToBlackListed.setExpireDate(expireDate);
