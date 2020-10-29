@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import hu.bme.crysys.homework.pangolin.webshop.model.BlackListedJwt;
@@ -17,6 +17,6 @@ public interface BlackListedJwtRepository extends JpaRepository<BlackListedJwt, 
 
     @Modifying
     @Transactional
-    void deleteByExpireDateBefore(LocalDate date);
+    void deleteByExpireDateBefore(LocalDateTime date);
 
 }
