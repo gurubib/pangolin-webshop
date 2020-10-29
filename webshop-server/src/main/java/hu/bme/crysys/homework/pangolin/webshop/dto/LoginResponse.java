@@ -10,5 +10,7 @@ import lombok.*;
 public class LoginResponse {
 
     private AuthStatus status;
+    private String username;
+    private String token;
 
 }
