@@ -14,11 +14,13 @@ public class AdminService {
 
     public boolean updateUser(String userId, UpdateUserRequest request) {
         // TODO - write updateUser
+        // admin should not be able to modified
         return true;
     }
 
     public boolean removeUser(String userId) {
         // TODO - write removeUser
+        // admin should not be able to deleted
         return true;
     }
 

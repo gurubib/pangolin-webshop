@@ -17,14 +17,15 @@ import hu.bme.crysys.homework.pangolin.webshop.service.AdminService;
 @Slf4j
 @Validated
 @RestController
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
 
     @RolesAllowed("ADMIN")
-    @PutMapping("/admin/users/{id}")
-    public ResponseEntity updateUser(@PathVariable(name = "id") @NotNull String id, @NotNull @Valid UpdateUserRequest request) {
+    @PutMapping("/users/{id}")
+    public ResponseEntity updateUser(@PathVariable(name = "id") @NotNull String id, @RequestBody @NotNull @Valid UpdateUserRequest request) {
         boolean isSuccess = adminService.updateUser(id, request);
 
         if (isSuccess) {
@@ -37,7 +38,7 @@ public class AdminController {
     }
 
     @RolesAllowed("ADMIN")
-    @DeleteMapping("/admin/users/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity removeUser(@PathVariable(name = "id") @NotNull String id) {
         boolean isSuccess = adminService.removeUser(id);
 

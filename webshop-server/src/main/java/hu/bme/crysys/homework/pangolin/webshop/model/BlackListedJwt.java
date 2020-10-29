@@ -7,24 +7,24 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
+import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "role")
-public class Role {
+@Table(name = "jwt_black_list")
+public class BlackListedJwt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty
-    private String name;
+    private String token;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @NotEmpty
+    private LocalDate expireDate;
 
 }

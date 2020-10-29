@@ -4,28 +4,24 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 import hu.bme.crysys.homework.pangolin.webshop.configuration.AdminConfiguration;
 import hu.bme.crysys.homework.pangolin.webshop.configuration.RoleConfiguration;
-import hu.bme.crysys.homework.pangolin.webshop.configuration.SecurityConfiguration;
-import hu.bme.crysys.homework.pangolin.webshop.model.Role;
 import hu.bme.crysys.homework.pangolin.webshop.model.User;
-import hu.bme.crysys.homework.pangolin.webshop.repository.RoleRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
 
 @SpringBootApplication
 @RequiredArgsConstructor
 public class WebshopApplication implements CommandLineRunner {
 
-    private final SecurityConfiguration securityConfiguration;
+    private final PasswordEncoder passwordEncoder;
     private final AdminConfiguration adminConfiguration;
     private final RoleConfiguration roleConfiguration;
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(WebshopApplication.class, args);
@@ -33,16 +29,6 @@ public class WebshopApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        BCryptPasswordEncoder passwordEncoder = securityConfiguration.bCryptPasswordEncoder();
-
-        Role adminRole = new Role();
-        adminRole.setName(roleConfiguration.getAdmin());
-		adminRole = roleRepository.save(adminRole);
-
-        Role userRole = new Role();
-		userRole.setName(roleConfiguration.getUser());
-		userRole = roleRepository.save(userRole);
-
         User admin = User.builder()
                 .id(-1L)
                 .username(adminConfiguration.getUsername())
@@ -50,7 +36,7 @@ public class WebshopApplication implements CommandLineRunner {
                 .email(adminConfiguration.getEmail())
                 .dateOfBirth(LocalDate.of(1900, 1, 1))
                 .registrationDate(LocalDate.of(1900, 1, 1))
-                .roles(Set.of(adminRole, userRole))
+                .roles(List.of(roleConfiguration.getUser(), roleConfiguration.getAdmin()))
                 .build();
 
         userRepository.save(admin);
