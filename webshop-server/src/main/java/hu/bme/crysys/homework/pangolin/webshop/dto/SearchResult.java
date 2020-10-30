@@ -12,6 +12,9 @@ import java.util.List;
 public class SearchResult {
 
     // TODO - containment of the search result add missing fields below
-    List<CommentResult> comments;
+    private String fileName;
+    private String location;
+    private String uploaderUserName;
+    private List<CommentResult> comments;
 
 }
