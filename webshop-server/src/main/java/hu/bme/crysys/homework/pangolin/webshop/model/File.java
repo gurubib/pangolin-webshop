@@ -15,7 +15,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "file")
+@Table(
+        name = "file",
+        indexes = {
+                @Index(name = "file_fileName_idx", columnList = "fileName")
+        }
+)
 public class File {
 
     @Id

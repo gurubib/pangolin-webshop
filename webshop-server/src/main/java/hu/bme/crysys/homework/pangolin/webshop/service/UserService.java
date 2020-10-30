@@ -1,20 +1,30 @@
 package hu.bme.crysys.homework.pangolin.webshop.service;
 
+import hu.bme.crysys.homework.pangolin.webshop.dto.*;
+import hu.bme.crysys.homework.pangolin.webshop.model.File;
+import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
-import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
-import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
-import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
-import hu.bme.crysys.homework.pangolin.webshop.dto.UploadRequest;
+import static hu.bme.crysys.homework.pangolin.webshop.mapper.FileMapper.filesToSearchResults;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
+    private final FileRepository fileRepository;
+
     public SearchResponse search(String fileName) {
-        // TODO - write search
-        return SearchResponse.builder().build();
+        final List<File> files = fileRepository.findByFileNameContaining(fileName);
+        final List<SearchResult> searchResults = filesToSearchResults(files);
+        return SearchResponse.builder()
+                .results(searchResults)
+                .build();
     }
 
     public Optional<DownloadResponse> download(String fileId) {
