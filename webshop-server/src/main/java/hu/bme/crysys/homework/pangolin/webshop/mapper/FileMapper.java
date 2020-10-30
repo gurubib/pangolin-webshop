@@ -26,6 +26,7 @@ public final class FileMapper {
                 .fileName(file.getFileName())
                 .location(file.getLocation())
                 .uploaderUserName(file.getUploader().getUsername())
+                .date(file.getCreationDate())
                 .comments(commentsToCommentResults(file.getComments()))
                 .build();
     }

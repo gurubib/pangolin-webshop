@@ -2,6 +2,7 @@ package hu.bme.crysys.homework.pangolin.webshop.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,7 @@ public class SearchResult {
     private String fileName;
     private String location;
     private String uploaderUserName;
+    private LocalDateTime date;
     private List<CommentResult> comments;
 
 }
