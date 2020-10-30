@@ -22,6 +22,7 @@ public final class CommentMapper {
 
     public static CommentResult commentToCommentResult(final Comment comment) {
         return CommentResult.builder()
+                .uuid(comment.getUuid())
                 .text(comment.getText())
                 .userName(comment.getUser().getUsername())
                 .date(comment.getCreationDate())

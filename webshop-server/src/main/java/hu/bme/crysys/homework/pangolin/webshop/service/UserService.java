@@ -27,7 +27,7 @@ public class UserService {
                 .build();
     }
 
-    public Optional<DownloadResponse> download(String fileId) {
+    public Optional<DownloadResponse> download(String fileUuid) {
         // TODO - write download
         return Optional.empty();
     }
@@ -37,7 +37,7 @@ public class UserService {
         return true;
     }
 
-    public boolean addComment(String fileId, AddCommentRequest request) {
+    public boolean addComment(String fileUuid, AddCommentRequest request) {
         // TODO - write addComment
         return true;
     }

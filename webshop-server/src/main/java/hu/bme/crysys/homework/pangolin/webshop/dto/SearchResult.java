@@ -13,6 +13,7 @@ import java.util.List;
 public class SearchResult {
 
     // TODO - containment of the search result add missing fields below
+    private String uuid;
     private String fileName;
     private String location;
     private String uploaderUserName;

@@ -19,7 +19,8 @@ import java.util.List;
 @Table(
         name = "file",
         indexes = {
-                @Index(name = "file_fileName_idx", columnList = "fileName")
+                @Index(name = "file_fileName_idx", columnList = "fileName"),
+                @Index(name = "file_uuid_idx", columnList = "uuid", unique = true)
         }
 )
 public class File {
@@ -27,6 +28,8 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String uuid;
 
     private String fileName;
 

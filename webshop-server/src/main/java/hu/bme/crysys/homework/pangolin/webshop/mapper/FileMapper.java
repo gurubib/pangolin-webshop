@@ -23,6 +23,7 @@ public final class FileMapper {
 
     public static SearchResult fileToSearchResult(final File file) {
         return SearchResult.builder()
+                .uuid(file.getUuid())
                 .fileName(file.getFileName())
                 .location(file.getLocation())
                 .uploaderUserName(file.getUploader().getUsername())

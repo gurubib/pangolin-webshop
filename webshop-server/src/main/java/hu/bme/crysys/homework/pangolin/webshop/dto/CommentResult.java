@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class CommentResult {
 
     // TODO - write missing fields
+    private String uuid;
     private String text;
     private String userName;
     private LocalDateTime date;
