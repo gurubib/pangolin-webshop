@@ -14,12 +14,19 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comment")
+@Table(
+        name = "comment",
+        indexes = {
+                @Index(name = "comment_uuid_idx", columnList = "uuid", unique = true)
+        }
+)
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String uuid;
 
     @Column(length = 100)
     private String text;

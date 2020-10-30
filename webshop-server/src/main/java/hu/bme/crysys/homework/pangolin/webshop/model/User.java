@@ -19,12 +19,19 @@ import java.util.stream.Collectors;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(
+        name = "user",
+        indexes = {
+                @Index(name = "user_uuid_idx", columnList = "uuid", unique = true)
+        }
+)
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String uuid;
 
     @NotEmpty
     private String username;

@@ -24,9 +24,12 @@ public class AdminController {
     private final AdminService adminService;
 
     @RolesAllowed("ADMIN")
-    @PutMapping("/users/{id}")
-    public ResponseEntity updateUser(@PathVariable(name = "id") @NotNull String id, @RequestBody @NotNull @Valid UpdateUserRequest request) {
-        boolean isSuccess = adminService.updateUser(id, request);
+    @PutMapping("/users/{uuid}")
+    public ResponseEntity<?> updateUser(
+            @PathVariable(name = "uuid") @NotNull String userUuid,
+            @RequestBody @NotNull @Valid UpdateUserRequest request
+    ) {
+        boolean isSuccess = adminService.updateUser(userUuid, request);
 
         if (isSuccess) {
             log.debug("Update User: done. --> 200 - Ok");
@@ -38,9 +41,9 @@ public class AdminController {
     }
 
     @RolesAllowed("ADMIN")
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity removeUser(@PathVariable(name = "id") @NotNull String id) {
-        boolean isSuccess = adminService.removeUser(id);
+    @DeleteMapping("/users/{uuid}")
+    public ResponseEntity<?> removeUser(@PathVariable(name = "uuid") @NotNull String userUuid) {
+        boolean isSuccess = adminService.removeUser(userUuid);
 
         if (isSuccess) {
             log.debug("Remove User: done. --> 200 - Ok");

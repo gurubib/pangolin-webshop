@@ -12,13 +12,13 @@ public class AdminService {
 
     private final UserRepository userRepository;
 
-    public boolean updateUser(String userId, UpdateUserRequest request) {
+    public boolean updateUser(String userUuid, UpdateUserRequest request) {
         // TODO - write updateUser
         // admin should not be able to modified
         return true;
     }
 
-    public boolean removeUser(String userId) {
+    public boolean removeUser(String userUuid) {
         // TODO - write removeUser
         // admin should not be able to deleted
         return true;
