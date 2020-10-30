@@ -19,9 +19,5 @@ public class AddCommentRequest {
     private String text;
 
     @NotNull
-    private Long userId;
-
-    @NotNull
-    private LocalDate creationDate;
-
+    private String userUuid;
 }
