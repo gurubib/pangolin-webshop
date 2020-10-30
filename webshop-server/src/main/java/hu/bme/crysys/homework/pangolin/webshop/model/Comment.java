@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class Comment {
     @Column(length = 100)
     private String text;
 
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
