@@ -452,7 +452,7 @@ int main(int argc, char *argv[]) {
     strncpy(integer_of_8_bytes, input_buffer + bytes_read, sizeof(integer_of_8_bytes));
     block_length = parseInt64(integer_of_8_bytes);
     if (block_length < 0) {
-        cerr << "Error!";
+        cerr << "The length of a block cannot be negative!";
         exit(1);
     }
     bytes_read += 8;
@@ -485,7 +485,7 @@ int main(int argc, char *argv[]) {
         strncpy(integer_of_8_bytes, input_buffer + bytes_read, sizeof(integer_of_8_bytes));
         block_length = parseInt64(integer_of_8_bytes);
         if (block_length < 0) {
-            cerr << "Error!";
+            cerr << "The length of a block cannot be negative!";
             exit(1);
         }
         bytes_read += 8;
@@ -505,7 +505,6 @@ int main(int argc, char *argv[]) {
             animation_blocks_read++;
         }
         else {
-            cout << "BLOCK ID: " << hex << (int)(unsigned char)block_id;
             cerr << "Invalid file format! A header must be followed by a Credits or an Animation Block!";
             exit(1);
         }
@@ -540,14 +539,14 @@ int main(int argc, char *argv[]) {
 
     vector<Image> frames;
 
-    for(unsigned int i = 0; i < animations.size(); i++) {
+    for (unsigned int i = 0; i < animations.size(); i++) {
         const unsigned int width_ = animations[i].width;
         const unsigned int height_ = animations[i].height;
         std::string map_ = "RGB";
         const StorageType type_ = CharPixel;
         const unsigned int delay_ = animations[i].duration / 10;
         vector<unsigned char> pixels_;
-        for(unsigned int j = 0; j < width_ * height_; j++){
+        for (unsigned int j = 0; j < width_ * height_; j++){
             pixels_.push_back(animations[i].pixels[j].R);
             pixels_.push_back(animations[i].pixels[j].G);
             pixels_.push_back(animations[i].pixels[j].B);
