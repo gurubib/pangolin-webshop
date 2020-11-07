@@ -1,7 +1,8 @@
 #include <iostream>
 #include <fstream>
-#include<vector>
+#include <vector>
 #include <regex>
+#include <Magick++.h>
 
 // Reasonable upper values
 #define MAX_FILE_SIZE 1000000000 // 1 GB
@@ -19,9 +20,10 @@
 #define CAFF_ANIMATION 0x3
 
 // The actual file size
-int FILE_SIZE = 0;
+unsigned int FILE_SIZE = 0;
 
 using namespace std;
+using namespace Magick;
 
 int64_t parseInt64(char bytes[8]) {
     int64_t value = 0;
@@ -35,7 +37,7 @@ struct Pixel {
     int R;
     int G;
     int B;
-    
+
     Pixel(char R, char G, char B) {
         this->R = (unsigned char)R;
         this->G = (unsigned char)G;
@@ -53,7 +55,7 @@ struct Header {
         cout << "Size: " << header_size << ", Anim: " << num_anim << endl << endl;
     }
 
-    void parse(char *input_buffer, int &bytes_read) {
+    void parse(char *input_buffer, unsigned int &bytes_read) {
         char integer_of_8_bytes[8];
 
         // Header Magic
@@ -71,7 +73,7 @@ struct Header {
             cerr << "Incorrect magic value!";
             exit(1);
         }
-        
+
         // Header Size
         if (bytes_read + sizeof(integer_of_8_bytes) > FILE_SIZE) {
             cerr << "Error, unexpectedly reached EOF!";
@@ -120,9 +122,9 @@ struct Credits {
         cout << "Creator: " << creator << endl << endl;
     }
 
-    void parse(char *input_buffer, int &bytes_read) {
+    void parse(char *input_buffer, unsigned int &bytes_read) {
         char integer_of_8_bytes[8];
-        
+
         // Checking for EOF in case of YYMDhm together.
         if (bytes_read + 6 > FILE_SIZE) {
             cerr << "Error, unexpectedly reached EOF!";
@@ -170,7 +172,7 @@ struct Credits {
             cerr << "Error, unexpectedly reached EOF!";
             exit(1);
         }
-    
+
         strncpy(creator, input_buffer + bytes_read, creator_len);
         creator[creator_len] = '\0';
         bytes_read += creator_len;
@@ -194,13 +196,13 @@ struct Animation {
         cout << "Duration: " << duration << ", Height: " << height << ", Width: " << width << endl;
         cout << "Caption: " << caption << endl;
 
-        for (int i = 0; i < tags.size(); i++) {
+        for (unsigned int i = 0; i < tags.size(); i++) {
             cout << "Tag" << i << ": " << tags[i] << endl;
         }
 
         cout << "First 2 Pixels:" << endl;
 
-        for (int i = 0; i < pixels.size(); i++) {
+        for (unsigned int i = 0; i < pixels.size(); i++) {
             cout << "RGB(" << pixels[i].R << ", " << pixels[i].G << ", " << pixels[i].B << ")" << endl;
             if (i == 1) {
                 break;
@@ -210,7 +212,7 @@ struct Animation {
         cout << endl;
     }
 
-    void parse(char *input_buffer, int &bytes_read) {
+    void parse(char *input_buffer, unsigned int &bytes_read) {
         char integer_of_8_bytes[8];
 
         // Duration
@@ -303,7 +305,7 @@ struct Animation {
         }
 
         // Caption
-        int caption_size = 0;        
+        int caption_size = 0;
         for (int i = 0; i < header_size; i++) {
             if (bytes_read + i >= FILE_SIZE) {
                 cerr << "Error, unexpectedly reached EOF!";
@@ -417,11 +419,11 @@ int main(int argc, char *argv[]) {
         cerr << "File is too large! The size should be less than " << MAX_FILE_SIZE << " bytes!";
         exit(1);
     }
-    
+
     char input_buffer[FILE_SIZE];
     input_file.read(input_buffer, FILE_SIZE);
 
-    int bytes_read = 0; // Counts the number of bytes read so far.
+    unsigned int bytes_read = 0; // Counts the number of bytes read so far.
 
     // Temp Buffers
     char block_id;
@@ -431,7 +433,7 @@ int main(int argc, char *argv[]) {
     /*
      * Read 1st block (Header)
      */
-    
+
     // Block ID
     block_id = input_buffer[0];
     bytes_read += 1;
@@ -449,6 +451,10 @@ int main(int argc, char *argv[]) {
 
     strncpy(integer_of_8_bytes, input_buffer + bytes_read, sizeof(integer_of_8_bytes));
     block_length = parseInt64(integer_of_8_bytes);
+    if (block_length < 0) {
+        cerr << "Error!";
+        exit(1);
+    }
     bytes_read += 8;
 
     Header header;
@@ -478,6 +484,10 @@ int main(int argc, char *argv[]) {
 
         strncpy(integer_of_8_bytes, input_buffer + bytes_read, sizeof(integer_of_8_bytes));
         block_length = parseInt64(integer_of_8_bytes);
+        if (block_length < 0) {
+            cerr << "Error!";
+            exit(1);
+        }
         bytes_read += 8;
 
         if (block_id == CAFF_CREDITS) {
@@ -506,7 +516,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    for (int i = bytes_read; i < FILE_SIZE; i++) {
+    for (unsigned int i = bytes_read; i < FILE_SIZE; i++) {
         cout << input_buffer[bytes_read];
     }
 
@@ -519,9 +529,37 @@ int main(int argc, char *argv[]) {
     cout << "--------------------" << endl << "PARSING SUCCESSFUL:" << endl << "--------------------" << endl << endl;
     header.print();
     credits.print();
-    for (int i = 0; i < animations.size(); i++) {
+    for (unsigned int i = 0; i < animations.size(); i++) {
         animations[i].print();
     }
 
+    /*
+     * Create GIF from animations
+     */
+    InitializeMagick(nullptr);
+
+    vector<Image> frames;
+
+    for(unsigned int i = 0; i < animations.size(); i++) {
+        const unsigned int width_ = animations[i].width;
+        const unsigned int height_ = animations[i].height;
+        std::string map_ = "RGB";
+        const StorageType type_ = CharPixel;
+        const unsigned int delay_ = animations[i].duration / 10;
+        vector<unsigned char> pixels_;
+        for(unsigned int j = 0; j < width_ * height_; j++){
+            pixels_.push_back(animations[i].pixels[j].R);
+            pixels_.push_back(animations[i].pixels[j].G);
+            pixels_.push_back(animations[i].pixels[j].B);
+        }
+        const unsigned char *pixelsArray_ = &pixels_[0];
+        Image frame(width_, height_, map_, type_, pixelsArray_);
+        frame.animationDelay(delay_);
+        frames.push_back(frame);
+    }
+    string gifFileName = file_name + ".gif";
+    writeImages(frames.begin(), frames.end(), gifFileName);
+    cout << "CAFF parsed to " << gifFileName << endl;
+    
     return 0;
 }
