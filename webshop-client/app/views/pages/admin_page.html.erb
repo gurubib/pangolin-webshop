@@ -1,0 +1,67 @@
+<div class="tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child is-2">
+      <div class="section">
+        <article class="panel is-primary">
+          <p class="panel-heading">
+            Menu
+          </p>
+
+          <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+            My Profile
+          </a>
+          <a class="panel-block">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+            Upload
+          </a>
+          <a class="panel-block  is-active">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+            Admin Page
+          </a>
+        </article>
+      </div>
+
+
+    </div>
+    <div class="tile is-child is-8">
+      <div class="section">
+        <div class="content">
+          <h1 class="title">
+            Admin page
+          </h1>
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Date of birth</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <% for i in 0..10 %>
+              <tr>
+                <th>test_user</th>
+                <th>test@gmail.com</th>
+                <th>1995-03-15</th>
+                <th><a href="#">Edit</a>/<a href="#">Delete</a></th>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <div class="tile is-child is-2"></div>
+  </div>
+</div>
