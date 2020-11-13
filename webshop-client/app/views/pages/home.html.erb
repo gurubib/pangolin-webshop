@@ -1,0 +1,32 @@
+
+<div class="section">
+  <div class="columns is-multiline">
+    <% for _ in (0..7) %>
+      <div class="column is-one-quarter">
+        <div class="card">
+          <div class="card-image">
+<!--            <img src="http://i.stack.imgur.com/SBv4T.gif" alt="">-->
+            <img src=<%= image_url '1.caff.gif' %> alt="">
+          </div>
+          <div class="card-footer">
+            <a href='# 'class="card-footer-item">Show</a>
+            <a href='# 'class="card-footer-item">Download</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+  <a class="pagination-previous">Previous</a>
+  <a class="pagination-next">Next page</a>
+  <ul class="pagination-list">
+    <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+    <li><a class="pagination-link" aria-label="Goto page 45">2</a></li>
+    <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">3</a></li>
+  </ul>
+</nav>
+
+
