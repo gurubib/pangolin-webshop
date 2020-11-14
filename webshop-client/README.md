@@ -5,6 +5,8 @@ application up and running.
 
 ## Deployment instructions
 
+### Locally
+
 You will need the following things before starting:
 * Ruby version: 2.6.5
 
@@ -14,4 +16,16 @@ To install dependencies, run this command:
 To start webserver:
 `rails server`
 
-*TODO*: Dockerization.
+### With Docker
+
+Build from the base directory:
+
+```
+docker build webshop-client -t pangolin-client
+```
+
+Then run the image:
+
+```
+docker run -p 3000:3000 pangolin-client rails s -b 0.0.0.0
+```
