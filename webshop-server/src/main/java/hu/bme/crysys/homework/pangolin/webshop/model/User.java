@@ -31,8 +31,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 36)
     @NotEmpty
+    @Column(length = 36)
     private String uuid;
 
     @NotEmpty

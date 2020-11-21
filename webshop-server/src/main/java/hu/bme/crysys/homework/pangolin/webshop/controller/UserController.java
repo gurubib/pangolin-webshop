@@ -32,13 +32,25 @@ public class UserController {
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SearchResponse.class))}),
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Ok",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SearchResponse.class
+                                    ))
+                    }),
             @ApiResponse(responseCode = "403"),
-            @ApiResponse(responseCode = "404", description = "Not found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = SearchResponse.class))})
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SearchResponse.class
+                                    ))
+                    })
     })
     @GetMapping("/search/{fileName}")
     public ResponseEntity<SearchResponse> search(@PathVariable(name = "fileName") String fileName) {
@@ -57,13 +69,25 @@ public class UserController {
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ok",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = DownloadResponse.class))}),
-            @ApiResponse(responseCode = "403"),
-            @ApiResponse(responseCode = "404", description = "Not found",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = DownloadResponse.class))})
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Ok",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = DownloadResponse.class
+                                    ))
+                    }),
+            @ApiResponse(responseCode = "403", description = "Authentication required"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Not found",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = DownloadResponse.class
+                                    ))
+                    })
     })
     @GetMapping("/{uuid}")
     public ResponseEntity<DownloadResponse> download(@PathVariable(name = "uuid") @NotNull String fileUuid) {
@@ -82,42 +106,42 @@ public class UserController {
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "403", description = "Authentication required"),
             @ApiResponse(responseCode = "500")
     })
     @PostMapping
-    public ResponseEntity<?> upload(@RequestBody @NotNull @Valid UploadRequest request) {
+    public HttpStatus upload(@RequestBody @NotNull @Valid UploadRequest request) {
         boolean isSuccess = userService.upload(request);
 
         if (isSuccess) {
-            log.debug("Upload: done. --> 200 - Ok");
-            return ResponseEntity.status(HttpStatus.OK).build();
+            log.debug("Upload: done. --> 204 - Ok");
+            return HttpStatus.NO_CONTENT;
         } else {
             log.debug("Upload: error. --> 500 - Internal server error");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "403", description = "Authentication required"),
             @ApiResponse(responseCode = "500")
     })
     @PostMapping("/{uuid}/comments")
-    public ResponseEntity<?> addComment(
+    public HttpStatus addComment(
             @PathVariable(name = "uuid") @NotNull String fileUuid,
             @RequestBody @NotNull @Valid AddCommentRequest request
     ) {
         boolean isSuccess = userService.addComment(fileUuid, request);
 
         if (isSuccess) {
-            log.debug("Add Comment: done. --> 200 - Ok");
-            return ResponseEntity.status(HttpStatus.OK).build();
+            log.debug("Add Comment: done. --> 204 - Ok");
+            return HttpStatus.NO_CONTENT;
         } else {
             log.debug("Add Comment: error. --> 500 - Internal server error");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 

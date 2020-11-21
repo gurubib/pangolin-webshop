@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AddCommentRequest {
 
-    // TODO - add missing fields
     @NotNull
     @Size(max = 100)
     private String text;

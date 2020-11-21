@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,45 +24,46 @@ public class AdminController {
 
     private final AdminService adminService;
 
+
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "403", description = "Authentication required"),
             @ApiResponse(responseCode = "500")
     })
     @RolesAllowed("ADMIN")
     @PutMapping("/users/{uuid}")
-    public ResponseEntity<?> updateUser(
+    public HttpStatus updateUser(
             @PathVariable(name = "uuid") @NotNull String userUuid,
             @RequestBody @NotNull @Valid UpdateUserRequest request
     ) {
         boolean isSuccess = adminService.updateUser(userUuid, request);
 
         if (isSuccess) {
-            log.debug("Update User: done. --> 200 - Ok");
-            return ResponseEntity.status(HttpStatus.OK).build();
+            log.debug("Update User: done. --> 204 - Ok");
+            return HttpStatus.NO_CONTENT;
         } else {
             log.debug("Update User: error. --> 500 - Internal server error");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "204"),
+            @ApiResponse(responseCode = "403", description = "Authentication required"),
             @ApiResponse(responseCode = "500")
     })
     @RolesAllowed("ADMIN")
     @DeleteMapping("/users/{uuid}")
-    public ResponseEntity<?> removeUser(@PathVariable(name = "uuid") @NotNull String userUuid) {
+    public HttpStatus removeUser(@PathVariable(name = "uuid") @NotNull String userUuid) {
         boolean isSuccess = adminService.removeUser(userUuid);
 
         if (isSuccess) {
-            log.debug("Remove User: done. --> 200 - Ok");
-            return ResponseEntity.status(HttpStatus.OK).build();
+            log.debug("Remove User: done. --> 204 - Ok");
+            return HttpStatus.NO_CONTENT;
         } else {
             log.debug("Remove User: error. --> 500 - Internal server error");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 
