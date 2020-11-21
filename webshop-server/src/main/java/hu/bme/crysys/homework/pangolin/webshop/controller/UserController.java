@@ -1,10 +1,9 @@
 package hu.bme.crysys.homework.pangolin.webshop.controller;
 
-import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
-import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
-import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
-import hu.bme.crysys.homework.pangolin.webshop.dto.UploadRequest;
-import hu.bme.crysys.homework.pangolin.webshop.service.UserService;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,6 +15,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
+import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
+import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
+import hu.bme.crysys.homework.pangolin.webshop.dto.UploadRequest;
+import hu.bme.crysys.homework.pangolin.webshop.service.UserService;
+
 @Slf4j
 @Validated
 @RestController
@@ -25,6 +30,16 @@ public class UserController {
 
     private final UserService userService;
 
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = SearchResponse.class))}),
+            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = SearchResponse.class))})
+    })
     @GetMapping("/search/{fileName}")
     public ResponseEntity<SearchResponse> search(@PathVariable(name = "fileName") String fileName) {
         SearchResponse searchResponse = userService.search(fileName);
@@ -40,6 +55,16 @@ public class UserController {
         }
     }
 
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = DownloadResponse.class))}),
+            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = DownloadResponse.class))})
+    })
     @GetMapping("/{uuid}")
     public ResponseEntity<DownloadResponse> download(@PathVariable(name = "uuid") @NotNull String fileUuid) {
         Optional<DownloadResponse> downloadResponse = userService.download(fileUuid);
@@ -55,6 +80,12 @@ public class UserController {
         }
     }
 
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "500")
+    })
     @PostMapping
     public ResponseEntity<?> upload(@RequestBody @NotNull @Valid UploadRequest request) {
         boolean isSuccess = userService.upload(request);
@@ -68,6 +99,12 @@ public class UserController {
         }
     }
 
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "500")
+    })
     @PostMapping("/{uuid}/comments")
     public ResponseEntity<?> addComment(
             @PathVariable(name = "uuid") @NotNull String fileUuid,

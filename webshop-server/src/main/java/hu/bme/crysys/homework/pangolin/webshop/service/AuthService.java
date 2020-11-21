@@ -92,7 +92,7 @@ public class AuthService {
 
         blackListedJwtRepository.save(jwtToBlackListed);
 
-        log.debug("Logout: success. --> 200 - Success");
+        log.debug("Logout: success. --> 204 - Success");
         return HttpStatus.NO_CONTENT;
     }
 
