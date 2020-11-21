@@ -31,7 +31,4 @@ public class RegistrationRequest {
     @NotNull
     private LocalDate dateOfBirth;
 
-    @NotNull
-    private LocalDate registrationDate;
-
 }

@@ -1,17 +1,13 @@
 package hu.bme.crysys.homework.pangolin.webshop.controller;
 
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.RolesAllowed;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
+import hu.bme.crysys.homework.pangolin.webshop.controller.interfaces.IAdminController;
 import hu.bme.crysys.homework.pangolin.webshop.dto.UpdateUserRequest;
 import hu.bme.crysys.homework.pangolin.webshop.service.AdminService;
 
@@ -20,22 +16,12 @@ import hu.bme.crysys.homework.pangolin.webshop.service.AdminService;
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-public class AdminController {
+public class AdminController implements IAdminController {
 
     private final AdminService adminService;
 
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204"),
-            @ApiResponse(responseCode = "403", description = "Authentication required"),
-            @ApiResponse(responseCode = "500")
-    })
-    @RolesAllowed("ADMIN")
-    @PutMapping("/users/{uuid}")
-    public HttpStatus updateUser(
-            @PathVariable(name = "uuid") @NotNull String userUuid,
-            @RequestBody @NotNull @Valid UpdateUserRequest request
-    ) {
+    @Override
+    public HttpStatus updateUser(String userUuid, UpdateUserRequest request) {
         boolean isSuccess = adminService.updateUser(userUuid, request);
 
         if (isSuccess) {
@@ -47,15 +33,8 @@ public class AdminController {
         }
     }
 
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204"),
-            @ApiResponse(responseCode = "403", description = "Authentication required"),
-            @ApiResponse(responseCode = "500")
-    })
-    @RolesAllowed("ADMIN")
-    @DeleteMapping("/users/{uuid}")
-    public HttpStatus removeUser(@PathVariable(name = "uuid") @NotNull String userUuid) {
+    @Override
+    public HttpStatus removeUser(String userUuid) {
         boolean isSuccess = adminService.removeUser(userUuid);
 
         if (isSuccess) {

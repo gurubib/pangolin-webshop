@@ -1,20 +1,16 @@
 package hu.bme.crysys.homework.pangolin.webshop.controller;
 
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
+import hu.bme.crysys.homework.pangolin.webshop.controller.interfaces.IUserController;
 import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
 import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
 import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
@@ -26,34 +22,12 @@ import hu.bme.crysys.homework.pangolin.webshop.service.UserService;
 @RestController
 @RequestMapping("/files")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements IUserController {
 
     private final UserService userService;
 
-
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Ok",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = SearchResponse.class
-                                    ))
-                    }),
-            @ApiResponse(responseCode = "403"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not found",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = SearchResponse.class
-                                    ))
-                    })
-    })
-    @GetMapping("/search/{fileName}")
-    public ResponseEntity<SearchResponse> search(@PathVariable(name = "fileName") String fileName) {
+    @Override
+    public ResponseEntity<SearchResponse> search(String fileName) {
         SearchResponse searchResponse = userService.search(fileName);
 
         if (searchResponse.getResults().isEmpty()) {
@@ -67,30 +41,8 @@ public class UserController {
         }
     }
 
-
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Ok",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = DownloadResponse.class
-                                    ))
-                    }),
-            @ApiResponse(responseCode = "403", description = "Authentication required"),
-            @ApiResponse(
-                    responseCode = "404",
-                    description = "Not found",
-                    content = {
-                            @Content(
-                                    mediaType = "application/json",
-                                    schema = @Schema(implementation = DownloadResponse.class
-                                    ))
-                    })
-    })
-    @GetMapping("/{uuid}")
-    public ResponseEntity<DownloadResponse> download(@PathVariable(name = "uuid") @NotNull String fileUuid) {
+    @Override
+    public ResponseEntity<DownloadResponse> download(String fileUuid) {
         Optional<DownloadResponse> downloadResponse = userService.download(fileUuid);
 
         if (downloadResponse.isEmpty()) {
@@ -104,14 +56,8 @@ public class UserController {
         }
     }
 
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204"),
-            @ApiResponse(responseCode = "403", description = "Authentication required"),
-            @ApiResponse(responseCode = "500")
-    })
-    @PostMapping
-    public HttpStatus upload(@RequestBody @NotNull @Valid UploadRequest request) {
+    @Override
+    public HttpStatus upload(UploadRequest request) {
         boolean isSuccess = userService.upload(request);
 
         if (isSuccess) {
@@ -123,17 +69,8 @@ public class UserController {
         }
     }
 
-
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204"),
-            @ApiResponse(responseCode = "403", description = "Authentication required"),
-            @ApiResponse(responseCode = "500")
-    })
-    @PostMapping("/{uuid}/comments")
-    public HttpStatus addComment(
-            @PathVariable(name = "uuid") @NotNull String fileUuid,
-            @RequestBody @NotNull @Valid AddCommentRequest request
-    ) {
+    @Override
+    public HttpStatus addComment(String fileUuid, AddCommentRequest request) {
         boolean isSuccess = userService.addComment(fileUuid, request);
 
         if (isSuccess) {
