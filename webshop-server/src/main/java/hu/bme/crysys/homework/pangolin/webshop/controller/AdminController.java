@@ -3,6 +3,7 @@ package hu.bme.crysys.homework.pangolin.webshop.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,28 +22,30 @@ public class AdminController implements IAdminController {
     private final AdminService adminService;
 
     @Override
-    public HttpStatus updateUser(String userUuid, UpdateUserRequest request) {
-        boolean isSuccess = adminService.updateUser(userUuid, request);
+    public ResponseEntity<?> updateUser(String userUuid, UpdateUserRequest request) {
+        try {
+            adminService.updateUser(userUuid, request);
 
-        if (isSuccess) {
             log.debug("Update User: done. --> 204 - Ok");
-            return HttpStatus.NO_CONTENT;
-        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
             log.debug("Update User: error. --> 500 - Internal server error");
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            log.debug("Message: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @Override
-    public HttpStatus removeUser(String userUuid) {
-        boolean isSuccess = adminService.removeUser(userUuid);
+    public ResponseEntity<?> removeUser(String userUuid) {
+        try {
+            adminService.removeUser(userUuid);
 
-        if (isSuccess) {
             log.debug("Remove User: done. --> 204 - Ok");
-            return HttpStatus.NO_CONTENT;
-        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        } catch (Exception e) {
             log.debug("Remove User: error. --> 500 - Internal server error");
-            return HttpStatus.INTERNAL_SERVER_ERROR;
+            log.debug("Message: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

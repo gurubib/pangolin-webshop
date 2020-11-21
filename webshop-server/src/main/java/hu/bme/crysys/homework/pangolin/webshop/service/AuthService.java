@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import hu.bme.crysys.homework.pangolin.webshop.configuration.RoleConfiguration;
 import hu.bme.crysys.homework.pangolin.webshop.configuration.TokenConfiguration;
@@ -58,6 +59,7 @@ public class AuthService {
                             LoginResponse.builder()
                                     .status(AuthStatus.SUCCESS)
                                     .username(username)
+                                    .uuid(user.getUuid())
                                     .token(token)
                                     .build()
                     );
@@ -74,14 +76,14 @@ public class AuthService {
     }
 
     @Transactional
-    public HttpStatus logout(String bearerToken) {
+    public ResponseEntity<?> logout(String bearerToken) {
         String token;
 
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             token = bearerToken.substring(7);
         } else {
             log.debug("Logout: wrong token. --> 403 - Forbidden");
-            return HttpStatus.FORBIDDEN;
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         // The token has to be expired by this time.
@@ -94,7 +96,7 @@ public class AuthService {
         blackListedJwtRepository.save(jwtToBlackListed);
 
         log.debug("Logout: success. --> 204 - Success");
-        return HttpStatus.NO_CONTENT;
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Transactional
@@ -113,6 +115,7 @@ public class AuthService {
         }
 
         User user = User.builder()
+                .uuid(UUID.randomUUID().toString())
                 .email(request.getEmail())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))

@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +76,7 @@ public interface IUserController {
             @ApiResponse(responseCode = "500")
     })
     @PostMapping
-    HttpStatus upload(@RequestBody @NotNull @Valid UploadRequest request);
+    ResponseEntity<?> upload(@RequestBody @NotNull @Valid UploadRequest request);
 
 
     @ApiResponses(value = {
@@ -86,7 +85,7 @@ public interface IUserController {
             @ApiResponse(responseCode = "500")
     })
     @PostMapping("/{uuid}/comments")
-    HttpStatus addComment(
+    ResponseEntity<?> addComment(
             @PathVariable(name = "uuid") @NotNull String fileUuid,
             @RequestBody @NotNull @Valid AddCommentRequest request
     );

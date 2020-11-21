@@ -25,7 +25,7 @@ public final class CommentMapper {
         return CommentResult.builder()
                 .uuid(comment.getUuid())
                 .text(comment.getText())
-                .userName(comment.getUser().getUsername())
+                .userName(comment.getUser() == null ? "Deleted user" : comment.getUser().getUsername())
                 .date(comment.getCreationDate())
                 .build();
     }
