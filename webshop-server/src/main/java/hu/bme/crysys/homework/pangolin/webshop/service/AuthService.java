@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.ValidationException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -116,7 +117,7 @@ public class AuthService {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .dateOfBirth(request.getDateOfBirth())
-                .registrationDate(request.getRegistrationDate())
+                .registrationDate(LocalDate.now())
                 .roles(List.of(roleConfiguration.getUser()))
                 .build();
 
