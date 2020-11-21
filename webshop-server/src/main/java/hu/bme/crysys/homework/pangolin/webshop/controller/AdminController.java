@@ -1,5 +1,7 @@
 package hu.bme.crysys.homework.pangolin.webshop.controller;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,11 @@ public class AdminController {
 
     private final AdminService adminService;
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "500")
+    })
     @RolesAllowed("ADMIN")
     @PutMapping("/users/{uuid}")
     public ResponseEntity<?> updateUser(
@@ -40,6 +47,12 @@ public class AdminController {
         }
     }
 
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "403"),
+            @ApiResponse(responseCode = "500")
+    })
     @RolesAllowed("ADMIN")
     @DeleteMapping("/users/{uuid}")
     public ResponseEntity<?> removeUser(@PathVariable(name = "uuid") @NotNull String userUuid) {

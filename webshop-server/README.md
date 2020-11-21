@@ -15,7 +15,10 @@
 **To stop application:**  
 `ctrl + c` in the console window  
   
-    
+
+** API **  
+`http://localhost:8080/api/docs`   
+`http://localhost:8080/api/swagger-ui`  
 ___    
 _TODO_ megírni a TODO-val jelölt részeket  
 _TODO_ boolean visszatérésű service metódusok void-ra cserélése és megfelelő exception handling  
