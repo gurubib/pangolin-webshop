@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 public class DownloadResponse {
 
-    // TODO - write content (remove below field)
-    private String fieldToRemove;
+    private String preview;
+    private String fileContentAsString;
 
 }

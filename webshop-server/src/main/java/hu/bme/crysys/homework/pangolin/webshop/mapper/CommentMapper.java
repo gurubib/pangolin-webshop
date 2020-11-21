@@ -13,15 +13,15 @@ public final class CommentMapper {
     private CommentMapper() {
     }
 
-    public static List<CommentResult> commentsToCommentResults(final List<Comment> comments) {
+    public static List<CommentResult> mapCommentsToCommentResults(final List<Comment> comments) {
         if (comments == null) {
             return emptyList();
         }
 
-        return comments.stream().map(CommentMapper::commentToCommentResult).collect(toList());
+        return comments.stream().map(CommentMapper::mapCommentToCommentResult).collect(toList());
     }
 
-    public static CommentResult commentToCommentResult(final Comment comment) {
+    public static CommentResult mapCommentToCommentResult(final Comment comment) {
         return CommentResult.builder()
                 .uuid(comment.getUuid())
                 .text(comment.getText())
