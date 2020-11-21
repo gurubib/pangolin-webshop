@@ -13,6 +13,15 @@ public class UploadRequest {
 
     // TODO - write content (remove below field)
     @NotNull
-    private String fieldToRemove;
+    private String uploaderUuid;
+
+    @NotNull
+    private String requiredFileName;
+
+    @NotNull
+    private String fileContentAsString;
+
+    @NotNull
+    private FileType fileType;
 
 }

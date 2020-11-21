@@ -13,6 +13,4 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findByFile(File file);
 
-    // TODO - write missing funs
-
 }

@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import hu.bme.crysys.homework.pangolin.webshop.configuration.AdminConfiguration;
 import hu.bme.crysys.homework.pangolin.webshop.configuration.RoleConfiguration;
@@ -37,6 +38,7 @@ public class WebshopApplication implements CommandLineRunner {
                 .dateOfBirth(LocalDate.of(1900, 1, 1))
                 .registrationDate(LocalDate.of(1900, 1, 1))
                 .roles(List.of(roleConfiguration.getUser(), roleConfiguration.getAdmin()))
+                .uuid(UUID.randomUUID().toString())
                 .build();
 
         userRepository.save(admin);
