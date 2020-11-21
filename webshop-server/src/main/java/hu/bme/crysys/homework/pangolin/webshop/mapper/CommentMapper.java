@@ -1,14 +1,12 @@
 package hu.bme.crysys.homework.pangolin.webshop.mapper;
 
-import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
-import hu.bme.crysys.homework.pangolin.webshop.dto.CommentResult;
-import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
-
 import java.util.List;
-import java.util.UUID;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
+
+import hu.bme.crysys.homework.pangolin.webshop.dto.CommentResult;
+import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
 
 public final class CommentMapper {
 

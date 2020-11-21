@@ -29,12 +29,26 @@ public class AuthController {
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Login successful",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = LoginResponse.class))}),
-            @ApiResponse(responseCode = "403", description = "Forbidden",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = LoginResponse.class))})
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Login successful",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = LoginResponse.class
+                                    ))
+                    }),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = LoginResponse.class
+                                    ))
+                    })
     })
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @NotNull @Valid LoginRequest request) {
@@ -44,7 +58,7 @@ public class AuthController {
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204"),
-            @ApiResponse(responseCode = "403")
+            @ApiResponse(responseCode = "400")
     })
     @GetMapping("/logout")
     public HttpStatus logout(@RequestHeader(name = "Authorization") String token) {
@@ -53,12 +67,26 @@ public class AuthController {
 
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Registration successful",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RegistrationResponse.class))}),
-            @ApiResponse(responseCode = "403", description = "Forbidden",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RegistrationResponse.class))})
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Registration successful",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = RegistrationResponse.class
+                                    ))
+                    }),
+            @ApiResponse(
+                    responseCode = "403",
+                    description = "Forbidden",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(
+                                            implementation = RegistrationResponse.class
+                                    ))
+                    })
     })
     @PostMapping("/register")
     public ResponseEntity<RegistrationResponse> register(@RequestBody @NotNull @Valid RegistrationRequest request) {
