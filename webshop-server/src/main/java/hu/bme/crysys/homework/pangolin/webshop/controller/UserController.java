@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import hu.bme.crysys.homework.pangolin.webshop.controller.interfaces.IUserController;
@@ -58,26 +59,28 @@ public class UserController implements IUserController {
 
     @Override
     public HttpStatus upload(UploadRequest request) {
-        boolean isSuccess = userService.upload(request);
+        try {
+            userService.upload(request);
 
-        if (isSuccess) {
             log.debug("Upload: done. --> 204 - Ok");
             return HttpStatus.NO_CONTENT;
-        } else {
+        } catch (IOException e) {
             log.debug("Upload: error. --> 500 - Internal server error");
+            log.debug("Message: " + e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
 
     @Override
     public HttpStatus addComment(String fileUuid, AddCommentRequest request) {
-        boolean isSuccess = userService.addComment(fileUuid, request);
+        try {
+            userService.addComment(fileUuid, request);
 
-        if (isSuccess) {
             log.debug("Add Comment: done. --> 204 - Ok");
             return HttpStatus.NO_CONTENT;
-        } else {
+        } catch (Exception e) {
             log.debug("Add Comment: error. --> 500 - Internal server error");
+            log.debug("Message: " + e.getMessage());
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }

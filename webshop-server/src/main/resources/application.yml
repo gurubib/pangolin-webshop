@@ -53,3 +53,6 @@ pangolin:
     user: ROLE_USER
   token:
     expireLength: 600000 #10 min
+  multimedia:
+    directory:
+      path: ./files/
