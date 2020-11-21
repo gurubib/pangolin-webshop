@@ -12,12 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 public class SearchResult {
 
-    // TODO - containment of the search result add missing fields below
     private String uuid;
-    private String fileName;
-    private String location;
     private String uploaderUserName;
     private LocalDateTime date;
     private List<CommentResult> comments;
+    private String preview;
 
 }

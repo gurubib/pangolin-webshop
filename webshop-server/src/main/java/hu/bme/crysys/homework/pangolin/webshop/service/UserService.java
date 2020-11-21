@@ -1,23 +1,27 @@
 package hu.bme.crysys.homework.pangolin.webshop.service;
 
-import hu.bme.crysys.homework.pangolin.webshop.dto.*;
-import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
-import hu.bme.crysys.homework.pangolin.webshop.model.File;
-import hu.bme.crysys.homework.pangolin.webshop.model.User;
-import hu.bme.crysys.homework.pangolin.webshop.repository.CommentRepository;
-import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
-import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static hu.bme.crysys.homework.pangolin.webshop.mapper.FileMapper.filesToSearchResults;
+import static hu.bme.crysys.homework.pangolin.webshop.mapper.FileMapper.mapFileToDownloadResponse;
+import static hu.bme.crysys.homework.pangolin.webshop.mapper.FileMapper.mapFilesToSearchResponse;
+
+import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
+import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
+import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
+import hu.bme.crysys.homework.pangolin.webshop.dto.UploadRequest;
+import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
+import hu.bme.crysys.homework.pangolin.webshop.model.File;
+import hu.bme.crysys.homework.pangolin.webshop.model.User;
+import hu.bme.crysys.homework.pangolin.webshop.repository.CommentRepository;
+import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
+import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
 
 @Slf4j
 @Service
@@ -30,15 +34,23 @@ public class UserService {
 
     public SearchResponse search(String fileName) {
         final List<File> files = fileRepository.findByFileNameContaining(fileName);
-        final List<SearchResult> searchResults = filesToSearchResults(files);
-        return SearchResponse.builder()
-                .results(searchResults)
-                .build();
+        return mapFilesToSearchResponse(files);
     }
 
     public Optional<DownloadResponse> download(String fileUuid) {
-        // TODO - write download
-        return Optional.empty();
+        Optional<File> fileOptional = fileRepository.findByUuid(fileUuid);
+
+        if (fileOptional.isEmpty()) {
+            return Optional.empty();
+        }
+
+        File file = fileOptional.get();
+        try {
+            return Optional.of(mapFileToDownloadResponse(file));
+        } catch (Exception e) {
+            log.debug("Can not read file during parsing the download response - " + e.getMessage());
+            return Optional.empty();
+        }
     }
 
     public boolean upload(UploadRequest request) {

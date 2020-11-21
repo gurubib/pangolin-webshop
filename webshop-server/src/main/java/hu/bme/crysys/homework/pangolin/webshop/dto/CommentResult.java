@@ -2,7 +2,6 @@ package hu.bme.crysys.homework.pangolin.webshop.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentResult {
 
-    // TODO - write missing fields
     private String uuid;
     private String text;
     private String userName;
