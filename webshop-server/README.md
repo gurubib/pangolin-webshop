@@ -17,8 +17,9 @@
   
 
 ** API **  
-`http://localhost:8080/api/docs`   
-`http://localhost:8080/api/swagger-ui`  
+json: `http://localhost:8080/api/docs`   
+yaml: `http://localhost:8080/api/docs.yaml`   
+ui: `http://localhost:8080/api/swagger-ui`  
 ___    
 _TODO_ megírni a TODO-val jelölt részeket  
 _TODO_ boolean visszatérésű service metódusok void-ra cserélése és megfelelő exception handling  
