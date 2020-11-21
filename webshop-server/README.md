@@ -16,7 +16,7 @@
 `ctrl + c` in the console window  
   
 
-** API **  
+**API**  
 json: `http://localhost:8080/api/docs`   
 yaml: `http://localhost:8080/api/docs.yaml`   
 ui: `http://localhost:8080/api/swagger-ui`  
