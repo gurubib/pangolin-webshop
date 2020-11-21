@@ -12,7 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUsername(String username);
 
-    // TODO - write missing funs
     Optional<User> findByUuid(String uuid);
 
 }

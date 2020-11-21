@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class UploadRequest {
 
-    // TODO - write content (remove below field)
     @NotNull
     private String uploaderUuid;
 

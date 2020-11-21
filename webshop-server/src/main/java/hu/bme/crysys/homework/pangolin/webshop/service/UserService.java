@@ -69,9 +69,7 @@ public class UserService {
 
     public void upload(UploadRequest request) throws IOException {
         Optional<User> userOptional = userRepository.findByUuid(request.getUploaderUuid());
-        User uploader = userOptional.orElseThrow(
-                () -> new NoSuchElementException("Wrong user UUID: " + request.getUploaderUuid())
-        );
+        User uploader = userOptional.orElseThrow(() -> new NoSuchElementException("Wrong user UUID: " + request.getUploaderUuid()));
 
         File file = mapUploadRequestToFile(request, filesDirectoryPath);
         file.setUploader(uploader);
@@ -87,11 +85,7 @@ public class UserService {
         File file = fileToAddComment.orElseThrow(() -> new NoSuchElementException("Wrong file UUID."));
         final Comment commentToCreate = createComment(request, user, file);
 
-        Comment comment = commentRepository.save(commentToCreate);
-       /* user.getComments().add(comment);
-        userRepository.save(user);
-        file.getComments().add(comment);
-        fileRepository.save(file);*/
+        commentRepository.save(commentToCreate);
     }
 
     private Comment createComment(final AddCommentRequest request, final User user, final File file) {

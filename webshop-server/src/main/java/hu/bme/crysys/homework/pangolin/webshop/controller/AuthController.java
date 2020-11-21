@@ -1,7 +1,6 @@
 package hu.bme.crysys.homework.pangolin.webshop.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,7 @@ public class AuthController implements IAuthController {
     }
 
     @Override
-    public HttpStatus logout(String token) {
+    public ResponseEntity<?> logout(String token) {
         return authService.logout(token);
     }
 

@@ -11,6 +11,7 @@ public class LoginResponse {
 
     private AuthStatus status;
     private String username;
+    private String uuid;
     private String token;
 
 }

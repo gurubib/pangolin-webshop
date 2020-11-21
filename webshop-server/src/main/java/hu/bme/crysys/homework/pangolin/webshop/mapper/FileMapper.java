@@ -51,7 +51,7 @@ public final class FileMapper {
 
         return SearchResult.builder()
                 .uuid(file.getUuid())
-                .uploaderUserName(file.getUploader().getUsername())
+                .uploaderUserName(file.getUploader() == null ? "Deleted user" : file.getUploader().getUsername())
                 .date(file.getCreationDate())
                 .comments(comments == null ? new ArrayList<>() : mapCommentsToCommentResults(comments))
                 .preview(preview)
@@ -71,7 +71,7 @@ public final class FileMapper {
                 .build();
     }
 
-    public static DownloadResponse mapFileToDownloadResponse(final File file) throws Exception {
+    public static DownloadResponse mapFileToDownloadResponse(final File file) throws IOException {
         String preview = "..."; // TODO - call the parser and generate preview -> CAFF or CIFF are the file extensions
         String fileContentAsString = getFileContentAsString(file);
 

@@ -2,7 +2,7 @@ package hu.bme.crysys.homework.pangolin.webshop.controller.interfaces;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public interface IAdminController {
     })
     @RolesAllowed("ADMIN")
     @PutMapping("/users/{uuid}")
-    HttpStatus updateUser(
+    ResponseEntity<?> updateUser(
             @PathVariable(name = "uuid") @NotNull String userUuid,
             @RequestBody @NotNull @Valid UpdateUserRequest request
     );
@@ -36,6 +36,6 @@ public interface IAdminController {
     })
     @RolesAllowed("ADMIN")
     @DeleteMapping("/users/{uuid}")
-    HttpStatus removeUser(@PathVariable(name = "uuid") @NotNull String userUuid);
+    ResponseEntity<?> removeUser(@PathVariable(name = "uuid") @NotNull String userUuid);
 
 }
