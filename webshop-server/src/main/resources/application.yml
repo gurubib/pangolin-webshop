@@ -1,5 +1,11 @@
 server:
-  port: 8080
+  ssl:
+    key-store: ${SSL_DIRECTORY_PATH:./ssl}/keystore.p12
+    key-store-password: nilognap
+    key-store-type: pkcs12
+    key-alias: pangolin
+    key-password: nilognap
+  port: 8443
 
 spring:
   application:

@@ -42,7 +42,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-            .apply(new JwtConfigurer(jwtTokenProvider, blackListedJwtRepository));
+            .apply(new JwtConfigurer(jwtTokenProvider, blackListedJwtRepository))
+            .and()
+            .requiresChannel().anyRequest().requiresSecure();
+
     }
 
     @Bean
