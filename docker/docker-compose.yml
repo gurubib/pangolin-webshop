@@ -1,0 +1,41 @@
+version: "3.5"
+services:
+
+  pangolin-db:
+    build:
+      context: ../webshop-server/db
+      dockerfile: Dockerfile
+    image: pangolin-db
+    container_name: pangolin-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USERNAME: postgres
+      POSTGRES_DB: pangolin
+    ports:
+      - '5432:5432'
+    networks:
+      - default
+
+  pangolin-server:
+    build:
+      context: ../webshop-server
+      dockerfile: Dockerfile
+    image: pangolin-server
+    container_name: pangolin-server
+    restart: on-failure
+    environment:
+      DB_HOSTNAME: pangolin-db
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../webshop-server/files:/files
+    depends_on:
+      - pangolin-db
+    networks:
+      - default
+    entrypoint: ["java", "-Djava.security.egd=file:/dev/urandom", "-jar", "/app.jar"]
+
+networks:
+  default:
+    driver: bridge

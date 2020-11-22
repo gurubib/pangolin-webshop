@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>hu.bme.crysys.homework.pangolin</groupId>
-	<artifactId>webshop</artifactId>
+	<artifactId>webshop-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>webshop</name>
-	<description>Homework of VIHIMA06 subject.</description>
+	<name>webshop-server</name>
+	<description>Homework of VIHIMA06 subject - Server component</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -92,9 +92,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<addResources>true</addResources>
-				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -149,13 +146,6 @@
 				<version>3.7.0.1746</version>
 			</plugin>
 		</plugins>
-
-		<resources>
-			<resource>
-				<directory>/src/main/resources</directory>
-				<targetPath>/src/main/resources</targetPath>
-			</resource>
-		</resources>
 	</build>
 
 	<repositories>
