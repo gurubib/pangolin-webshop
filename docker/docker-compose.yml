@@ -9,7 +9,7 @@ services:
     container_name: pangolin-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USERNAME: postgres
       POSTGRES_DB: pangolin
     ports:
@@ -26,6 +26,9 @@ services:
     restart: on-failure
     environment:
       DB_HOSTNAME: pangolin-db
+      DB_USERNAME: postgres
+      DB_PASSWORD: ${DB_PASSWORD}
+      PANGOLIN_ADMIN_PASSWORD: ${PANGOLIN_ADMIN_PASSWORD}
     ports:
       - "8443:8443"
     volumes:
