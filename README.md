@@ -6,6 +6,8 @@ The easiest way to run the application and the db:
 * First: `./mvnw clean install -DskipTests` (building the server)
 * Second: `./run-app.sh` (deploying the whole application with docker)
 
+`Tip: with maven located in the root of the application, the root folder can be easily opened from editors as a project.`
+
 ## Deploy
 The application deployment is managed by Docker Compose.
 
