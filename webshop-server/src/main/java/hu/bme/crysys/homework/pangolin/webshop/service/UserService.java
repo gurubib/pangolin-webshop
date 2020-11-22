@@ -1,17 +1,5 @@
 package hu.bme.crysys.homework.pangolin.webshop.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static hu.bme.crysys.homework.pangolin.webshop.mapper.FileMapper.*;
-
 import hu.bme.crysys.homework.pangolin.webshop.dto.AddCommentRequest;
 import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
 import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
@@ -22,10 +10,19 @@ import hu.bme.crysys.homework.pangolin.webshop.model.User;
 import hu.bme.crysys.homework.pangolin.webshop.repository.CommentRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static hu.bme.crysys.homework.pangolin.webshop.mapper.FileMapper.*;
 
 @Slf4j
 @Service
-@PropertySource(name = "configFileProp", value = "application.yml")
 public class UserService {
 
     private final UserRepository userRepository;

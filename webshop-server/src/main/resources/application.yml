@@ -27,7 +27,7 @@ spring:
   datasource:
     username: postgres
     password: mysecretpassword
-    url: jdbc:postgresql://localhost:5432/pangolin
+    url: jdbc:postgresql://${DB_HOSTNAME:localhost:5432}/pangolin
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding: true
