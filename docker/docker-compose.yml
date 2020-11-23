@@ -1,5 +1,21 @@
 version: "3.5"
 services:
+  pangolin-client:
+    build: ../webshop-client
+    image: pangolin-client:latest
+    container_name: pangolin-client
+    command: ["rails", "server", "-b", "0.0.0.0"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../webshop-client:/usr/src/app
+      - ../webshop-client/node_modules:/usr/src/app/node_modules
+    environment:
+      - RAILS_ENV
+    depends_on:
+      - pangolin-server
+    networks:
+      - default
 
   pangolin-db:
     build:
