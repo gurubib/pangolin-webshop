@@ -2,17 +2,12 @@ package hu.bme.crysys.homework.pangolin.webshop.mapper;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
@@ -24,6 +19,7 @@ import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResult;
 import hu.bme.crysys.homework.pangolin.webshop.dto.UploadRequest;
 import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
 import hu.bme.crysys.homework.pangolin.webshop.model.File;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 @Slf4j
 public final class FileMapper {
@@ -47,6 +43,7 @@ public final class FileMapper {
     }
 
     public static SearchResult mapFileToSearchResult(final File file, final List<Comment> comments) {
+
         String preview = "..."; // TODO - call the parser and generate preview -> CAFF or CIFF are the file extensions
 
         return SearchResult.builder()
@@ -82,7 +79,7 @@ public final class FileMapper {
     }
 
     private static String getFileNameFromUploadRequest(UploadRequest request, String filesDirectoryPath) throws FileAlreadyExistsException {
-        String fileName = request.getRequiredFileName() + "." + request.getFileType();
+        String fileName = request.getRequiredFileName() + "." + request.getFileType().toString().toLowerCase();
 
         Path path = Path.of(filesDirectoryPath + fileName);
         if (Files.exists(path)) {
@@ -93,8 +90,9 @@ public final class FileMapper {
     }
 
     private static void saveFile(String fileNameWithPath, String fileContentAsString) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileNameWithPath))) {
-            writer.write(fileContentAsString);
+        final byte[] fileContent = Base64.decodeBase64(fileContentAsString);
+        try (final OutputStream stream = new FileOutputStream(fileNameWithPath)) {
+            stream.write(fileContent);
         } catch (IOException e) {
             throw new IOException("File writing exception: " + e.getMessage());
         }
