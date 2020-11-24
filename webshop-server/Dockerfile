@@ -1,3 +1,5 @@
-FROM openjdk:12-jdk-alpine
-ADD src/main/resources/*.yml /src/main/resources/
+FROM adoptopenjdk/openjdk11
+RUN apt update
+RUN apt -y install graphicsmagick-libmagick-dev-compat
 COPY target/*.jar app.jar
+COPY ./parser/parser /parser/parser

@@ -46,6 +46,7 @@ services:
       - "8080:8080"
     volumes:
       - ../webshop-server/files:/files
+      - ../webshop-server/parser:/parser
     depends_on:
       - pangolin-db
     networks:

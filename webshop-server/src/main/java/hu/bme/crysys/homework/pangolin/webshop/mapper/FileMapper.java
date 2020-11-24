@@ -1,25 +1,30 @@
 package hu.bme.crysys.homework.pangolin.webshop.mapper;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.*;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDateTime;
-import java.util.*;
-
-import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toList;
-import static hu.bme.crysys.homework.pangolin.webshop.mapper.CommentMapper.mapCommentsToCommentResults;
-
 import hu.bme.crysys.homework.pangolin.webshop.dto.DownloadResponse;
 import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResponse;
 import hu.bme.crysys.homework.pangolin.webshop.dto.SearchResult;
 import hu.bme.crysys.homework.pangolin.webshop.dto.UploadRequest;
 import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
 import hu.bme.crysys.homework.pangolin.webshop.model.File;
+import hu.bme.crysys.homework.pangolin.webshop.util.caff.CaffUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import static hu.bme.crysys.homework.pangolin.webshop.mapper.CommentMapper.mapCommentsToCommentResults;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 public final class FileMapper {
@@ -43,8 +48,7 @@ public final class FileMapper {
     }
 
     public static SearchResult mapFileToSearchResult(final File file, final List<Comment> comments) {
-
-        String preview = "..."; // TODO - call the parser and generate preview -> CAFF or CIFF are the file extensions
+        String preview = CaffUtils.getFilePreview(file);
 
         return SearchResult.builder()
                 .uuid(file.getUuid())
@@ -69,7 +73,7 @@ public final class FileMapper {
     }
 
     public static DownloadResponse mapFileToDownloadResponse(final File file) throws IOException {
-        String preview = "..."; // TODO - call the parser and generate preview -> CAFF or CIFF are the file extensions
+        String preview = CaffUtils.getFilePreview(file);
         String fileContentAsString = getFileContentAsString(file);
 
         return DownloadResponse.builder()
@@ -102,7 +106,7 @@ public final class FileMapper {
         Path filePath = Path.of(
                 file.getLocation() + file.getFileName()
         );
-        return Files.readString(filePath);
+        return Base64.encodeBase64String(Files.readAllBytes(filePath));
     }
 
 }
