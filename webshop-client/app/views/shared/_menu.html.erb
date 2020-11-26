@@ -1,0 +1,21 @@
+<div class="section">
+  <article class="panel is-primary">
+    <p class="panel-heading">
+      Menu
+    </p>
+    <a class="panel-block  <%= selected_menu_item == "Upload" ? "is-active" : "" %> ">
+          <span class="panel-icon">
+            <i class="fas fa-book" aria-hidden="true"></i>
+          </span>
+      Upload
+    </a>
+    <% if admin_user %>
+      <a class="panel-block <%= selected_menu_item == "Admin Page" ? "is-active" : "" %> ">
+            <span class="panel-icon">
+              <i class="fas fa-book" aria-hidden="true"></i>
+            </span>
+        Admin Page
+      </a>
+    <% end %>
+  </article>
+</div>

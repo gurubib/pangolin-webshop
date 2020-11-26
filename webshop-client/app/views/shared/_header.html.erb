@@ -21,6 +21,7 @@
       <div class="navbar-item">
         <div class="buttons">
           <% if logged_in? %>
+            <%=link_to "Upload", upload_page_path, method: :get, class:"button is-light" %>
             <%=link_to "Log out", logout_path, method: :get, class:"button is-light" %>
           <% else %>
             <%=link_to "Sign Up", register_path, method: :get, class:"button is-primary" %>

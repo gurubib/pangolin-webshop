@@ -1,12 +1,17 @@
 Rails.application.routes.draw do
   root to: 'application#home', as: 'home'
 
+  # User paths
+  get 'register' => 'users#new'
+  post 'create' => 'users#create', as: 'create_user'
+  get 'upload_page' => 'users#upload_page', as: 'upload_page'
+  post 'upload' => 'users#upload', as: 'upload'
+
   # Session paths
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
   get 'logout'  => 'sessions#destroy'
-  get 'register' => 'users#new'
-  post 'create' => 'users#create', as: 'create_user'
+
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   get 'pages/home'

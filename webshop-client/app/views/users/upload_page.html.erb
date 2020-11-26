@@ -1,0 +1,30 @@
+<div class="tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child is-2">
+      <%= render partial: 'shared/menu', :locals => {:selected_menu_item => "Upload", :admin_user => false} %>
+    </div>
+
+  <div class="tile is-child is-8">
+    <div class="section">
+      <div class="content">
+        <h1 class="title">
+          Upload a new CAFF file
+        </h1>
+
+        <%= form_tag('upload', multipart: true) do %>
+          <div class="field">
+            <%= file_field_tag 'picture' %>
+          </div>
+
+          <div class="actions">
+            <%= submit_tag :Confirm, class: "button is-primary", id: "submitBtn"%>
+          </div>
+        <% end %>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="tile is-child is-2"></div>
+</div>
+</div>
