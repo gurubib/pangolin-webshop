@@ -126,8 +126,8 @@ module SwaggerClient
 
     def initialize
       @scheme = 'http'
-      @host = 'localhost'
-      @base_path = 'http://localhost:8080'
+      @host = 'pangolin-server:8080'
+      @base_path = ''
       @api_key = {}
       @api_key_prefix = {}
       @timeout = 0

@@ -1,0 +1,7 @@
+<% flash.each do |type, message| %>
+  <article id="notice" class="message <%= bulma_class_for type %>">
+    <div class="message-header">
+      <p><%= message %></p>
+    </div>
+  </article>
+<% end %>

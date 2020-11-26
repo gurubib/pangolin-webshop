@@ -1,15 +1,17 @@
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <div class="content is-vcentered">
-      <h1 class="title">
-        Pangolin
-      </h1>
+    <div class="navbar-item">
+      <div class="content is-vcentered">
+        <h1 class="title">
+          Calsy
+        </h1>
+      </div>
     </div>
   </div>
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item">
+      <a class="navbar-item" href=<%= home_path %>>
         Home
       </a>
 
@@ -18,12 +20,12 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
+          <% if logged_in? %>
+            <%=link_to "Log out", logout_path, method: :get, class:"button is-light" %>
+          <% else %>
+            <%=link_to "Sign Up", register_path, method: :get, class:"button is-primary" %>
+            <%=link_to "Log In", login_path, method: :get, class:"button is-light" %>
+          <% end %>
         </div>
       </div>
     </div>
