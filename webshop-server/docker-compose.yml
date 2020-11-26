@@ -13,5 +13,19 @@ services:
       POSTGRES_USERNAME: postgres
       POSTGRES_DB: pangolin
     ports:
-      - '5432:5432'  
+      - '5432:5432'
+
+  pangolin-db-test:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    image: pangolin-db
+    container_name: pangolin-postgres-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USERNAME: postgres
+      POSTGRES_DB: pangolin-test
+    ports:
+      - '5431:5432'
 
