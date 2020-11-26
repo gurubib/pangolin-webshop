@@ -1,4 +1,4 @@
-package hu.bme.crysys.homework.pangolin.webshop.controller;
+package hu.bme.crysys.homework.pangolin.webshop.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,6 @@ import hu.bme.crysys.homework.pangolin.webshop.dto.UpdateUserRequest;
 import hu.bme.crysys.homework.pangolin.webshop.model.User;
 import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
-import hu.bme.crysys.homework.pangolin.webshop.service.AdminService;
 
 @Transactional
 @SpringBootTest
