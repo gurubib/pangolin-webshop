@@ -6,6 +6,9 @@ The easiest way to run the application and the db:
 * First: `./mvnw clean install -DskipTests` (building the server)
 * Second: `./run-app.sh` (deploying the whole application with docker)
 
+**Important**: on first run after executing the above command run this as well:
+`docker exec calsy-client rails webpacker:install` 
+
 `Tip: with maven located in the root of the application, the root folder can be easily opened from editors as a project.`
 
 ## Deploy

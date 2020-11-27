@@ -24,6 +24,9 @@ Build from the base directory:
 docker build webshop-client -t pangolin-client
 ```
 
+**Important**: on first run after executing the above command run this as well:
+`docker exec calsy-client rails webpacker:install` 
+
 Then run the image:
 
 ```
