@@ -10,10 +10,32 @@
   </div>
 
   <div id="navbarBasicExample" class="navbar-menu">
+
+    <% if logged_in? %>
     <div class="navbar-start">
-      <a class="navbar-item" href=<%= home_path %>>
-        Home
-      </a>
+
+      <div class="navbar-item">
+        <%= form_tag('search', method: :get) do %>
+          <div class="level">
+            <div class="level-item">
+              <div class="field">
+                <%= text_field_tag 'query', "", class: "input"%>
+              </div>
+
+            </div>
+
+            <div class="level-item">
+              <div class="actions">
+                <%= submit_tag :Search, class: "button", id: "submitBtn"%>
+              </div>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+    <% end %>
 
     </div>
 

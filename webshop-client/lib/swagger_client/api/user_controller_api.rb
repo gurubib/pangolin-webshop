@@ -21,8 +21,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [Object]
     def add_comment(body, uuid, opts = {})
-      data, _status_code, _headers = add_comment_with_http_info(body, uuid, opts)
-      data
+      data, _status_code, headers = add_comment_with_http_info(body, uuid, opts)
+      return data, headers
     end
 
     # @param body 
@@ -80,8 +80,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [DownloadResponse]
     def download(uuid, opts = {})
-      data, _status_code, _headers = download_with_http_info(uuid, opts)
-      data
+      data, _status_code, headers = download_with_http_info(uuid, opts)
+      return data, headers
     end
 
     # @param uuid 
@@ -132,8 +132,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [SearchResponse]
     def search(file_name, opts = {})
-      data, _status_code, _headers = search_with_http_info(file_name, opts)
-      data
+      data, _status_code, headers = search_with_http_info(file_name, opts)
+      return data, headers
     end
 
     # @param file_name 
@@ -184,8 +184,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [Object]
     def upload(body, opts = {})
-      data, _status_code, _headers = upload_with_http_info(body, opts)
-      data
+      data, _status_code, headers = upload_with_http_info(body, opts)
+      return data, headers
     end
 
     # @param body 

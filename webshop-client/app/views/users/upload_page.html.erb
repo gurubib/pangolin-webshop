@@ -1,7 +1,7 @@
 <div class="tile is-ancestor">
   <div class="tile is-parent">
     <div class="tile is-child is-2">
-      <%= render partial: 'shared/menu', :locals => {:selected_menu_item => "Upload", :admin_user => false} %>
+      <%= render partial: 'shared/menu', :locals => {:selected_menu_item => "Upload", :admin_user => @is_admin} %>
     </div>
 
   <div class="tile is-child is-8">
@@ -13,7 +13,7 @@
 
         <%= form_tag('upload', multipart: true) do %>
           <div class="field">
-            <%= file_field_tag 'picture' %>
+            <%= file_field_tag 'picture', required: true%>
           </div>
 
           <div class="actions">

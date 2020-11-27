@@ -1,0 +1,20 @@
+
+
+<div class="section">
+  <div class="columns is-multiline">
+    <% @caff_files.each do |caff_hash| %>
+      <% caff_file = SwaggerClient::SearchResult.build_from_hash caff_hash %>
+      <div class="column is-one-quarter">
+        <div class="card">
+          <div class="card-image">
+            <img src="data:image/jpeg;base64,<%= caff_file.preview %>">
+          </div>
+          <div class="card-footer">
+            <a href='# 'class="card-footer-item">Show</a>
+            <a href='# 'class="card-footer-item">Download</a>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

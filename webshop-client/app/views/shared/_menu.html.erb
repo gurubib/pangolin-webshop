@@ -3,16 +3,16 @@
     <p class="panel-heading">
       Menu
     </p>
-    <a class="panel-block  <%= selected_menu_item == "Upload" ? "is-active" : "" %> ">
+    <a class="panel-block  <%= selected_menu_item == "Upload" ? "is-active" : "" %> " href="upload_page">
           <span class="panel-icon">
-            <i class="fas fa-book" aria-hidden="true"></i>
+            <i class="fas fa-upload"></i>
           </span>
       Upload
     </a>
     <% if admin_user %>
-      <a class="panel-block <%= selected_menu_item == "Admin Page" ? "is-active" : "" %> ">
+      <a class="panel-block <%= selected_menu_item == "Admin Page" ? "is-active" : "" %> " href="admin_page">
             <span class="panel-icon">
-              <i class="fas fa-book" aria-hidden="true"></i>
+              <i class="fas fa-users-cog"></i>
             </span>
         Admin Page
       </a>

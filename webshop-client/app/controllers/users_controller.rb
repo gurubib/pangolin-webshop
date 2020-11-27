@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   end
 
   def upload_page
+    @is_admin = session[:username] == "root"
   end
 
   def upload
@@ -30,9 +31,38 @@ class UsersController < ApplicationController
     req = SwaggerClient::UploadRequest.new Hash[:uploader_uuid => session[:user_uuid], :required_file_name => name,
                                                 :file_content_as_string => file_b64, :file_type => extension]
     token = session[:token]
-    @@api_user.upload req, {:header_params => {"Authorization" => "Bearer " + token}}
+    data, header = @@api_user.upload req, {:header_params => {"Authorization" => token}}
+    session[:token] = header[:Authorization]
     flash[:notice] = "File upload finished."
     redirect_to home_path
+  end
+
+  def admin_page
+    @is_admin = session[:username] == "root"
+    unless @is_admin
+      flash[:error] = "Unauthorized access!"
+      redirect_back fallback_location: home_path
+    end
+
+    # TODO - get list of users
+  end
+
+  def search
+    @caff_files = []
+    query = params[:query]
+    if query == ""
+      query = "caff"
+    end
+    token = session[:token]
+    resp, header = @@api_user.search query, {:header_params => {"Authorization" => token}}
+    session[:token] = header[:Authorization]
+    if !resp.nil?
+      @caff_files = resp.results
+    end
+    logger.debug "---------->" + @caff_files.length.to_s
+    # @caff_files.each do |file|
+    #   logger.debug "-----------> " + file[:uploaderUserName]
+    # end
   end
 
   private

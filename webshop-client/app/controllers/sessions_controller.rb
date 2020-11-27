@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
     data = @@api_auth.login req
     if data.status == "SUCCESS"
       session[:user_uuid] = data.uuid
-      session[:token] = data.token
+      session[:username] = data.username
+      session[:token] = "Bearer " + data.token
       flash[:success] = "Successful login!"
       redirect_to home_path
     else
@@ -18,6 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    @@api_auth.logout session[:token]
     reset_session
     flash[:success] = 'Successful logout!'
     redirect_to home_path

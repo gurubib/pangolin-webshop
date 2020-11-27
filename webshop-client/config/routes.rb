@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   post 'create' => 'users#create', as: 'create_user'
   get 'upload_page' => 'users#upload_page', as: 'upload_page'
   post 'upload' => 'users#upload', as: 'upload'
+  get 'admin_page' => 'users#admin_page', as: 'admin_page'
+  get 'search' => 'users#search', as: 'search'
 
   # Session paths
   get    'login'   => 'sessions#new'

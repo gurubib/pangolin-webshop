@@ -19,8 +19,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [ListUsersResponse]
     def list_users(opts = {})
-      data, _status_code, _headers = list_users_with_http_info(opts)
-      data
+      data, _status_code, headers = list_users_with_http_info(opts)
+      return data, headers
     end
 
     # @param [Hash] opts the optional parameters
@@ -66,8 +66,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [Object]
     def remove_user(uuid, opts = {})
-      data, _status_code, _headers = remove_user_with_http_info(uuid, opts)
-      data
+      data, _status_code, headers = remove_user_with_http_info(uuid, opts)
+      return data, headers
     end
 
     # @param uuid 
@@ -119,8 +119,8 @@ module SwaggerClient
     # @param [Hash] opts the optional parameters
     # @return [Object]
     def update_user(body, uuid, opts = {})
-      data, _status_code, _headers = update_user_with_http_info(body, uuid, opts)
-      data
+      data, _status_code, headers = update_user_with_http_info(body, uuid, opts)
+      return data, headers
     end
 
     # @param body 
