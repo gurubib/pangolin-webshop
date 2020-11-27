@@ -1,5 +1,8 @@
 package hu.bme.crysys.homework.pangolin.webshop.service;
 
+import hu.bme.crysys.homework.pangolin.webshop.dto.ListUsersResponse;
+import hu.bme.crysys.homework.pangolin.webshop.dto.UserResult;
+import hu.bme.crysys.homework.pangolin.webshop.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -64,6 +67,13 @@ public class AdminService {
         });
         user.setFiles(new ArrayList<>());
         return userRepository.save(user);
+    }
+
+    public ListUsersResponse listUsers() {
+        final List<User> users = userRepository.findAll();
+        final List<UserResult> userResults = UserMapper.mapUsersToUserResults(users);
+
+        return new ListUsersResponse(userResults);
     }
 
 }

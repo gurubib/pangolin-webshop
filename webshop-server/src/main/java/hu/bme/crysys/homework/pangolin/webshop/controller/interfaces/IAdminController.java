@@ -1,5 +1,9 @@
 package hu.bme.crysys.homework.pangolin.webshop.controller.interfaces;
 
+import hu.bme.crysys.homework.pangolin.webshop.dto.ListUsersResponse;
+import hu.bme.crysys.homework.pangolin.webshop.dto.UpdateUserRequest;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import hu.bme.crysys.homework.pangolin.webshop.dto.UpdateUserRequest;
 
 @Validated
 @RestController
@@ -37,5 +39,22 @@ public interface IAdminController {
     @RolesAllowed("ADMIN")
     @DeleteMapping("/users/{uuid}")
     ResponseEntity<?> removeUser(@PathVariable(name = "uuid") @NotNull String userUuid);
+
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Ok",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = ListUsersResponse.class)
+                            )
+                    }
+            ),
+            @ApiResponse(responseCode = "403", description = "Authentication required")
+    })
+    @RolesAllowed("ADMIN")
+    @GetMapping("/users")
+    ResponseEntity<?> listUsers();
 
 }
