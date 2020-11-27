@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :verify_user_logged_in, except: [:new, :create]
+  before_action :verify_is_admin, only: [:admin_page, :destroy, :edit_user, :update]
 
   def new
   end
@@ -38,12 +39,6 @@ class UsersController < ApplicationController
   end
 
   def admin_page
-    @is_admin = session[:username] == "root"
-    unless @is_admin
-      flash[:error] = "Unauthorized access!"
-      redirect_back fallback_location: home_path
-    end
-
     @users = []
     token = session[:token]
     data, header = @@api_admin.list_users :header_params => {"Authorization" => token}
@@ -76,6 +71,20 @@ class UsersController < ApplicationController
     redirect_back fallback_location: home_path
   end
 
+  def edit_user
+    user_hash = params[:selected_user].permit(:uuid, :username, :email, :dateOfBirth, :registrationDate).to_h
+    @user = SwaggerClient::UserResult.build_from_hash user_hash
+  end
+
+  def update
+    token = session[:token]
+    req = SwaggerClient::UpdateUserRequest.new update_params
+    logger.debug "Request (update): " + req.to_s
+    data, header = @@api_admin.update_user req, params[:user][:uuid], {:header_params => {"Authorization" => token}}
+    session[:token] = header[:Authorization]
+    redirect_to admin_page_path
+  end
+
   private
   # Only allow a list of trusted parameters through.
   def user_params
@@ -87,5 +96,17 @@ class UsersController < ApplicationController
       flash[:error] = "Only logged in users can access this page!"
       redirect_back fallback_location: home_path
     end
+  end
+
+  def verify_is_admin
+    @is_admin = session[:username] == "root"
+    unless @is_admin
+      flash[:error] = "Unauthorized access!"
+      redirect_back fallback_location: home_path
+    end
+  end
+
+  def update_params
+    params.require(:user).permit(:email, :date_of_birth).to_h
   end
 end

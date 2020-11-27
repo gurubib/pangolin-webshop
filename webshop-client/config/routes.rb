@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get 'admin_page' => 'users#admin_page', as: 'admin_page'
   get 'search' => 'users#search', as: 'search'
   delete 'delete' => 'users#destroy', as: 'delete_user'
+  get 'edit_user' => 'users#edit_user', as: 'edit_user'
+  post 'update_user' => 'users#update', as: 'update_user'
 
   # Session paths
   get    'login'   => 'sessions#new'
