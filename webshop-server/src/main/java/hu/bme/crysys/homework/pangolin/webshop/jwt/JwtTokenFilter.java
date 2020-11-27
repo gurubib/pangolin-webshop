@@ -1,6 +1,7 @@
 package hu.bme.crysys.homework.pangolin.webshop.jwt;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -10,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +36,8 @@ public class JwtTokenFilter extends GenericFilterBean {
         if (token != null && jwtTokenProvider.validateToken(token) && blackListedTokens.isEmpty()) {
             Authentication auth = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
+            final HttpServletResponse httpRes = (HttpServletResponse) res;
+            httpRes.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + jwtTokenProvider.refreshToken(token));
         }
         filterChain.doFilter(req, res);
     }

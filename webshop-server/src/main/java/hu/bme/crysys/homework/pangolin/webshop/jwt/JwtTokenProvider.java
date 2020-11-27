@@ -55,6 +55,19 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public String refreshToken(final String token) {
+        final Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        final Calendar newExpireDate = Calendar.getInstance();
+        newExpireDate.add(Calendar.MILLISECOND, tokenConfiguration.getExpireLength());
+        final Date expiration = newExpireDate.getTime();
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(expiration)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
