@@ -44,7 +44,15 @@ class UsersController < ApplicationController
       redirect_back fallback_location: home_path
     end
 
-    # TODO - get list of users
+    @users = []
+    token = session[:token]
+    data, header = @@api_admin.list_users :header_params => {"Authorization" => token}
+    session[:token] = header[:Authorization]
+    logger.debug "---> " + data.to_s
+    if !data.nil?
+      filtered_users = data.users.select {|hash| hash[:username] != "root"}
+      @users = filtered_users
+    end
   end
 
   def search
@@ -59,10 +67,6 @@ class UsersController < ApplicationController
     if !resp.nil?
       @caff_files = resp.results
     end
-    logger.debug "---------->" + @caff_files.length.to_s
-    # @caff_files.each do |file|
-    #   logger.debug "-----------> " + file[:uploaderUserName]
-    # end
   end
 
   private

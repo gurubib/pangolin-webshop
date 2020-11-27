@@ -22,11 +22,12 @@
             </thead>
 
             <tbody>
-            <% for i in 0..10 %>
+            <% @users.each do |user_hash| %>
+              <% user = SwaggerClient::UserResult.build_from_hash user_hash %>
               <tr>
-                <th>test_user</th>
-                <th>test@gmail.com</th>
-                <th>1995-03-15</th>
+                <th><%= user.username %></th>
+                <th><%= user.email %></th>
+                <th><%= user.date_of_birth %></th>
                 <th><a href="#">Edit</a>/<a href="#">Delete</a></th>
               </tr>
             <% end %>
