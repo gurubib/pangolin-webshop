@@ -48,7 +48,6 @@ class UsersController < ApplicationController
     token = session[:token]
     data, header = @@api_admin.list_users :header_params => {"Authorization" => token}
     session[:token] = header[:Authorization]
-    logger.debug "---> " + data.to_s
     if !data.nil?
       filtered_users = data.users.select {|hash| hash[:username] != "root"}
       @users = filtered_users
@@ -67,6 +66,14 @@ class UsersController < ApplicationController
     if !resp.nil?
       @caff_files = resp.results
     end
+  end
+
+  def destroy
+    user_uuid = params[:uuid]
+    token = session[:token]
+    data, header = @@api_admin.remove_user user_uuid, {:header_params => {"Authorization" => token}}
+    session[:token] = header[:Authorization]
+    redirect_back fallback_location: home_path
   end
 
   private

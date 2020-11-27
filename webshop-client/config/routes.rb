@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'upload' => 'users#upload', as: 'upload'
   get 'admin_page' => 'users#admin_page', as: 'admin_page'
   get 'search' => 'users#search', as: 'search'
+  delete 'delete' => 'users#destroy', as: 'delete_user'
 
   # Session paths
   get    'login'   => 'sessions#new'

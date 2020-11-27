@@ -28,7 +28,7 @@
                 <th><%= user.username %></th>
                 <th><%= user.email %></th>
                 <th><%= user.date_of_birth %></th>
-                <th><a href="#">Edit</a>/<a href="#">Delete</a></th>
+                <th><a href="#">Edit</a>/<%= link_to "Delete", delete_user_path(:uuid => user.uuid), data: {:confirm => 'Are you sure?'}, :method => :delete%></th>
               </tr>
             <% end %>
             </tbody>
