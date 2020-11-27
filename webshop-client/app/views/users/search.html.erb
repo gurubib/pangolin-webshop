@@ -11,7 +11,7 @@
           </div>
           <div class="card-footer">
             <a href='# 'class="card-footer-item">Show</a>
-            <a href='# 'class="card-footer-item">Download</a>
+            <%= link_to "Download", download_caff_path(:caff_uuid => caff_file.uuid), :method => :get, class: "card-footer-item" %>
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   delete 'delete' => 'users#destroy', as: 'delete_user'
   get 'edit_user' => 'users#edit_user', as: 'edit_user'
   post 'update_user' => 'users#update', as: 'update_user'
+  get 'download' => 'users#download', as: 'download_caff'
 
   # Session paths
   get    'login'   => 'sessions#new'
