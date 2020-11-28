@@ -1,0 +1,9 @@
+version: "3.5"
+services:
+  pangolin-db:
+    container_name: pangolin-postgres-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USERNAME: postgres
+      POSTGRES_DB: pangolin-test

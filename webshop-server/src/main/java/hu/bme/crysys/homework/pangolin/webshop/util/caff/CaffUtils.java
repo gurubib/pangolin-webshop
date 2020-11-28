@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 public final class CaffUtils {
 
     private static final String VALID_PARSER_BINARY_SHA3_256_CHECKSUM = "30ad1ef56d8bebd6bfbe05ba39733b326618c9f294f9c74aee6c24a6d3bd187e";
-    private static final String PARSER_BINARY_LOCATION = "/parser/parser";
+    private static final String PARSER_BINARY_LOCATION = "./parser/parser";
 
     private CaffUtils() { }
 

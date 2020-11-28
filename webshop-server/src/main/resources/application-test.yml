@@ -2,7 +2,7 @@ spring:
   datasource:
     username: postgres
     password: mysecretpassword
-    url: jdbc:postgresql://${DB_HOSTNAME:localhost:5431}/pangolin-test
+    url: jdbc:postgresql://${DB_HOSTNAME:localhost:5432}/pangolin-test
     driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding: true
