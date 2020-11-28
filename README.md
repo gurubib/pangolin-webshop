@@ -41,3 +41,11 @@ The application's build tool is maven. See the README of _webshop-server_ for fu
 * `mvn clean install` - Builds the server application - **IMPORTANT - This process runs tests also, so the db must be running for these to be successful**
 * `mvn clean install -DskipTests` - Builds the server application, without tests (so running the db is not a requirement)
 * `mvn spring-boot:run` - Runs the server application locally (outside of docker) - **IMPORTANT - For running the application the db must be running**
+
+## Run Server Tests
+To run the tests written for the server part you must run the test-database container. Issue the following commands:
+
+```
+./run-test-db-only
+./mvnw clean install
+```
