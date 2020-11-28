@@ -94,4 +94,6 @@ class UsersController < ApplicationController
   def update_params
     params.require(:user).permit(:email, :date_of_birth).to_h
   end
+
+
 end

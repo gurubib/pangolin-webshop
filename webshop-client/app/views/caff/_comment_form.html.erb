@@ -5,15 +5,17 @@
     </p>
   </figure>
   <div class="media-content">
-    <div class="field">
-      <p class="control">
-        <textarea class="textarea" placeholder="Add a comment..."></textarea>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control">
-        <button class="button">Post comment</button>
-      </p>
-    </div>
+    <%= form_for :comment, url: post_comment_path, method: :post do |form| %>
+      <%= form.hidden_field :user_uuid, value: session[:user_uuid] %>
+      <%= form.hidden_field :caff_uuid, value: caff_uuid %>
+      <div class="field">
+          <%= form.text_area :text, class: "textarea", placeholder: "Add a comment..."%>
+      </div>
+      <div class="field">
+        <p class="control">
+          <%= form.submit :Post, class: "button", id: "submitBtn"%>
+        </p>
+      </div>
+    <% end %>
   </div>
 </article>

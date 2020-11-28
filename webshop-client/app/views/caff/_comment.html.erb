@@ -7,11 +7,11 @@
   <div class="media-content">
     <div class="content">
       <p>
-        <strong>Futóné Papp Dorottya</strong>
+        <strong><%= comment.user_name %></strong>
         <br>
-        Azta! Ez nagyon tetszik! Szép munka, ötös.
-        <!--                    <br>-->
-        <!--                    <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>-->
+        <%= comment.text %>
+        <br>
+        <small><%= prettify_comment_datetime comment.date %></small>
       </p>
     </div>
   </div>

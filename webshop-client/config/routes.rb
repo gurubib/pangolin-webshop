@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'search' => 'caff#search', as: 'search'
   get 'download' => 'caff#download', as: 'download_caff'
   get 'show' => 'caff#show', as: 'show_caff'
+  post 'post_comment' => 'caff#post_comment', as: 'post_comment'
 
   # Session paths
   get    'login'   => 'sessions#new'

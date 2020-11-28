@@ -46,11 +46,24 @@ class CaffController < ApplicationController
     end
   end
 
+  def post_comment
+    req = SwaggerClient::AddCommentRequest.new comment_params.slice(:text, :user_uuid)
+    token = session[:token]
+    caff_uuid = comment_params[:caff_uuid]
+    data, header = @@api_user.add_comment req, caff_uuid, {:header_params => {"Authorization" => token}}
+    session[:token] = header[:Authorization]
+    redirect_back fallback_location: home_path
+  end
+
   private
   def verify_user_logged_in
     if session[:user_uuid].nil?
       flash[:error] = "Only logged in users can access this page!"
       redirect_back fallback_location: home_path
     end
+  end
+
+  def comment_params
+    params.require(:comment).permit(:text, :user_uuid, :caff_uuid).to_h
   end
 end
