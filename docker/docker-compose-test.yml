@@ -4,6 +4,6 @@ services:
     container_name: pangolin-postgres-test
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: ${TEST_DB_PASSWORD}
+      POSTGRES_PASSWORD: mytestpassword
       POSTGRES_USERNAME: postgres
       POSTGRES_DB: pangolin-test

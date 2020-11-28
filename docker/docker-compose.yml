@@ -4,7 +4,7 @@ services:
     build: ../webshop-client
     image: pangolin-client:latest
     container_name: pangolin-client
-    command: ["rails", "server", "-b", "0.0.0.0"]
+    command: ["rails", "server", "-b", "ssl://0.0.0.0:3000?key=config/localhost.key&cert=config/localhost.crt"]
     ports:
       - "3000:3000"
     volumes:
@@ -43,7 +43,8 @@ services:
     environment:
       DB_HOSTNAME: pangolin-db
       DB_PASSWORD: ${DB_PASSWORD}
-      PANGOLIN_ADMIN_PASSWORD: ${PANGOLIN_ADMIN_PASSOWORD}
+      PANGOLIN_ADMIN_PASSWORD: ${PANGOLIN_ADMIN_PASSWORD}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     ports:
       - "8080:8080"
     volumes:
