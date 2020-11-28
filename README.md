@@ -49,3 +49,4 @@ To run the tests written for the server part you must run the test-database cont
 ./run-test-db-only
 ./mvnw clean install
 ```
+The `stop-app.sh` can also be used to stop the test-database container.
