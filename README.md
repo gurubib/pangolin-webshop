@@ -9,6 +9,8 @@ cd pangolin-client/config/
 openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout localhost.key -out localhost.crt
 ```
 #### Build and run the application
+Before running the application you should provide de required passwords and secrets. There is a `.env.sample` file, copy it as `.env`. **CHANGE THE PASSWORDS AND SECRETS INSIDE IT**, then save it. After this the application will use the given passwords and secrets.
+
 The easiest way to run the application and the db:
 * First: `./mvnw clean install -DskipTests` (building the server)
 * Second: `./run-app.sh` (deploying the whole application with docker)
