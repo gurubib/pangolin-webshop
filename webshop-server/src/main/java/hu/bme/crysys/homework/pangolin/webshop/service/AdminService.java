@@ -1,8 +1,5 @@
 package hu.bme.crysys.homework.pangolin.webshop.service;
 
-import hu.bme.crysys.homework.pangolin.webshop.dto.ListUsersResponse;
-import hu.bme.crysys.homework.pangolin.webshop.dto.UserResult;
-import hu.bme.crysys.homework.pangolin.webshop.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +10,14 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import hu.bme.crysys.homework.pangolin.webshop.configuration.RoleConfiguration;
+import hu.bme.crysys.homework.pangolin.webshop.dto.ListUsersResponse;
 import hu.bme.crysys.homework.pangolin.webshop.dto.UpdateUserRequest;
+import hu.bme.crysys.homework.pangolin.webshop.dto.UserResult;
+import hu.bme.crysys.homework.pangolin.webshop.mapper.UserMapper;
+import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
 import hu.bme.crysys.homework.pangolin.webshop.model.File;
 import hu.bme.crysys.homework.pangolin.webshop.model.User;
+import hu.bme.crysys.homework.pangolin.webshop.repository.CommentRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
 
@@ -25,6 +27,7 @@ public class AdminService {
 
     private final UserRepository userRepository;
     private final FileRepository fileRepository;
+    private final CommentRepository commentRepository;
     private final RoleConfiguration roleConfiguration;
 
     public void updateUser(String userUuid, UpdateUserRequest request) throws NotSupportedException {
@@ -43,6 +46,7 @@ public class AdminService {
     public void removeUser(String userUuid) throws NotSupportedException {
         User user = getUser(userUuid);
         user = makeFilesIndependentFromUser(user);
+        user = makeCommentsIndependentFromUser(user);
         userRepository.delete(user);
     }
 
@@ -64,6 +68,16 @@ public class AdminService {
         files.forEach(f -> {
             f.setUploader(null);
             fileRepository.save(f);
+        });
+        user.setFiles(new ArrayList<>());
+        return userRepository.save(user);
+    }
+
+    private User makeCommentsIndependentFromUser(User user) {
+        List<Comment> comments = commentRepository.findByUser(user);
+        comments.forEach(c -> {
+            c.setUser(null);
+            commentRepository.save(c);
         });
         user.setFiles(new ArrayList<>());
         return userRepository.save(user);
