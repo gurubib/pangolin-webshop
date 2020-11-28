@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   get 'upload_page' => 'users#upload_page', as: 'upload_page'
   post 'upload' => 'users#upload', as: 'upload'
   get 'admin_page' => 'users#admin_page', as: 'admin_page'
-
   delete 'delete' => 'users#destroy', as: 'delete_user'
   get 'edit_user' => 'users#edit_user', as: 'edit_user'
   post 'update_user' => 'users#update', as: 'update_user'
