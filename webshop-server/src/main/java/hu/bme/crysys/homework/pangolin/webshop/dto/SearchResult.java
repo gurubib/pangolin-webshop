@@ -13,6 +13,7 @@ import java.util.List;
 public class SearchResult {
 
     private String uuid;
+    private String filename;
     private String uploaderUserName;
     private LocalDateTime date;
     private List<CommentResult> comments;

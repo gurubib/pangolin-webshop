@@ -52,6 +52,7 @@ public final class FileMapper {
 
         return SearchResult.builder()
                 .uuid(file.getUuid())
+                .filename(file.getFileName())
                 .uploaderUserName(file.getUploader() == null ? "Deleted user" : file.getUploader().getUsername())
                 .date(file.getCreationDate())
                 .comments(comments == null ? new ArrayList<>() : mapCommentsToCommentResults(comments))
