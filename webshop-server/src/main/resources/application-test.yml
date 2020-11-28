@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: postgres
-    password: mysecretpassword
+    password: ${TEST_DB_PASSWORD}
     url: jdbc:postgresql://${DB_HOSTNAME:localhost:5432}/pangolin-test
     driver-class-name: org.postgresql.Driver
   main:
@@ -10,7 +10,7 @@ spring:
 pangolin:
   admin:
     username: root
-    password: 12345678
+    password: ${TEST_PANGOLIN_ADMIN_PASSWORD}
     email: admin@admin.hu
   roles:
     admin: ROLE_ADMIN

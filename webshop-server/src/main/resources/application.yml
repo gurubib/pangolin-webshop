@@ -26,7 +26,7 @@ spring:
     open-in-view: false
   datasource:
     username: postgres
-    password: mysecretpassword
+    password: ${DB_PASSWORD}
     url: jdbc:postgresql://${DB_HOSTNAME:localhost:5432}/pangolin
     driver-class-name: org.postgresql.Driver
   main:
@@ -46,7 +46,7 @@ logging:
 pangolin:
   admin:
     username: root
-    password: 12345678
+    password: ${PANGOLIN_ADMIN_PASSWORD}
     email: admin@admin.hu
   roles:
     admin: ROLE_ADMIN
@@ -56,3 +56,8 @@ pangolin:
   multimedia:
     directory:
       path: ./files/
+
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_SECRET_KEY}

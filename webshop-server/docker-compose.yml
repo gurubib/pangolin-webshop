@@ -9,7 +9,7 @@ services:
     container_name: pangolin-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USERNAME: postgres
       POSTGRES_DB: pangolin
     ports:
@@ -23,9 +23,10 @@ services:
     container_name: pangolin-postgres-test
     restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USERNAME: postgres
       POSTGRES_DB: pangolin-test
+      PANGOLIN_ADMIN_PASSWORD: ${PANGOLIN_ADMIN_PASSWORD}
     ports:
       - '5431:5432'
 
