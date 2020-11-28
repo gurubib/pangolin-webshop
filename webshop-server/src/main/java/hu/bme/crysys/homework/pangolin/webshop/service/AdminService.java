@@ -79,7 +79,7 @@ public class AdminService {
             c.setUser(null);
             commentRepository.save(c);
         });
-        user.setFiles(new ArrayList<>());
+        user.setComments(new ArrayList<>());
         return userRepository.save(user);
     }
 
