@@ -12,13 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.NotSupportedException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import hu.bme.crysys.homework.pangolin.webshop.configuration.RoleConfiguration;
 import hu.bme.crysys.homework.pangolin.webshop.dto.UpdateUserRequest;
+import hu.bme.crysys.homework.pangolin.webshop.model.Comment;
 import hu.bme.crysys.homework.pangolin.webshop.model.User;
+import hu.bme.crysys.homework.pangolin.webshop.repository.CommentRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.FileRepository;
 import hu.bme.crysys.homework.pangolin.webshop.repository.UserRepository;
 
@@ -37,6 +40,9 @@ public class AdminIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private FileRepository fileRepository;
@@ -75,6 +81,20 @@ public class AdminIntegrationTest {
 
         Optional<User> userAfterUpdate = userRepository.findByUuid(user.getUuid());
         assertTrue(userAfterUpdate.isEmpty());
+    }
+
+    @Test
+    void testDeleteUserWithComments() throws NotSupportedException {
+        User user = saveUser();
+        Comment comment = new Comment(1L, "1", "text", LocalDateTime.now(), user, null);
+        comment = commentRepository.save(comment);
+
+        adminService.removeUser(user.getUuid());
+
+        Optional<User> userAfterUpdate = userRepository.findByUuid(user.getUuid());
+        assertTrue(userAfterUpdate.isEmpty());
+        Optional<Comment> commentAfterUserDeleted = commentRepository.findById(comment.getId());
+        assertNull(comment.getUser());
     }
 
     @Test
