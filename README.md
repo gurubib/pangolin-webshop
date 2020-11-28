@@ -2,12 +2,21 @@
 BME - VIK - Computer Security Homework Project
 
 ### TL;DR
+#### Generate SSL files (first time only)
+First, you have to generate a self-signed certificate in the `pangolin-client/config/` folder.
+```
+cd pangolin-client/config/
+openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout localhost.key -out localhost.crt
+```
+#### Build and run the application
 The easiest way to run the application and the db:
 * First: `./mvnw clean install -DskipTests` (building the server)
 * Second: `./run-app.sh` (deploying the whole application with docker)
 
-**Important**: on first run after executing the above command run this as well:
-`docker exec pangolin-client rails webpacker:install` 
+#### Install webpacker (first time only) 
+```
+docker exec pangolin-client rails webpacker:install
+``` 
 
 `Tip: with maven located in the root of the application, the root folder can be easily opened from editors as a project.`
 
