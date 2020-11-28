@@ -9,7 +9,7 @@
       <%= form.hidden_field :user_uuid, value: session[:user_uuid] %>
       <%= form.hidden_field :caff_uuid, value: caff_uuid %>
       <div class="field">
-          <%= form.text_area :text, class: "textarea", placeholder: "Add a comment..."%>
+          <%= form.text_area :text, class: "textarea", placeholder: "Add a comment...", :maxlength => 100%>
       </div>
       <div class="field">
         <p class="control">

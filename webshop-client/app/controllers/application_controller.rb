@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   layout 'home_page'
   require 'swagger_client'
+  skip_before_action :verify_authenticity_token
+
 
   @@api_auth = SwaggerClient::AuthControllerApi.new
   @@api_user = SwaggerClient::UserControllerApi.new

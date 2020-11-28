@@ -3,12 +3,12 @@
 
   <div class="field">
     <%= form.label :username, class: "label" %>
-    <%= form.text_field :username, class: "input", required: true %>
+    <%= form.text_field :username, class: "input", required: true, :maxlength => 50, id: "userName" %>
   </div>
 
   <div class="field">
     <%= form.label :email, class: "label"  %>
-    <%= form.email_field :email, class: "input", required: true %>
+    <%= form.email_field :email, class: "input", required: true, :maxlength => 50 %>
   </div>
 
   <div class="field">
@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :password, class: "label"  %>
-    <%= form.password_field :password_confirm, class: "input", required: true%>
+    <%= form.password_field :password_confirm, class: "input", required: true, id: "passwordValidation"%>
     <span id='message'></span>
   </div>
 

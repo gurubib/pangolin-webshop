@@ -1,5 +1,6 @@
 class CaffController < ApplicationController
   before_action :verify_user_logged_in
+
   def search
     @caff_files = []
     query = params[:query]
