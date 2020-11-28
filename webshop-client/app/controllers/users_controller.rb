@@ -49,20 +49,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def search
-    @caff_files = []
-    query = params[:query]
-    if query == ""
-      query = "caff"
-    end
-    token = session[:token]
-    resp, header = @@api_user.search query, {:header_params => {"Authorization" => token}}
-    session[:token] = header[:Authorization]
-    if !resp.nil?
-      @caff_files = resp.results
-    end
-  end
-
   def destroy
     user_uuid = params[:uuid]
     token = session[:token]
@@ -82,26 +68,6 @@ class UsersController < ApplicationController
     data, header = @@api_admin.update_user req, params[:user][:uuid], {:header_params => {"Authorization" => token}}
     session[:token] = header[:Authorization]
     redirect_to admin_page_path
-  end
-
-  def download
-    token = session[:token]
-    data, header = @@api_user.download params[:caff_uuid], {:header_params => {"Authorization" => token}}
-    session[:token] = header[:Authorization]
-    if !data.nil?
-      caff_string = data.file_content_as_string
-      caff = Base64.decode64 caff_string
-
-      local_filename = "download" + session[:user_uuid] + ".caff"
-      local_path = Rails.root.join('tmp', local_filename)
-
-      File.open(local_path, 'wb') do |f|
-        f.write(caff)
-      end
-      send_data(local_path, :filename => 'download.caff', :disposition => 'attachment')
-
-      File.delete(local_path)
-    end
   end
 
   private
