@@ -15,6 +15,8 @@ module SwaggerClient
   class SearchResult
     attr_accessor :uuid
 
+    attr_accessor :filename
+
     attr_accessor :uploader_user_name
 
     attr_accessor :date
@@ -26,31 +28,33 @@ module SwaggerClient
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'uuid' => :'uuid',
-        :'uploader_user_name' => :'uploaderUserName',
-        :'date' => :'date',
-        :'comments' => :'comments',
-        :'preview' => :'preview'
+          :'uuid' => :'uuid',
+          :'filename' => :'filename',
+          :'uploader_user_name' => :'uploaderUserName',
+          :'date' => :'date',
+          :'comments' => :'comments',
+          :'preview' => :'preview'
       }
     end
 
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'uuid' => :'Object',
-        :'uploader_user_name' => :'Object',
-        :'date' => :'Object',
-        :'comments' => :'Object',
-        :'preview' => :'Object'
+          :'uuid' => :'Object',
+          :'filename' => :'Object',
+          :'uploader_user_name' => :'Object',
+          :'date' => :'Object',
+          :'comments' => :'Object',
+          :'preview' => :'Object'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-      ])
+              ])
     end
-  
+
     # Initializes the object
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
@@ -68,6 +72,10 @@ module SwaggerClient
 
       if attributes.key?(:'uuid')
         self.uuid = attributes[:'uuid']
+      end
+
+      if attributes.key?(:'filename')
+        self.filename = attributes[:'filename']
       end
 
       if attributes.key?(:'uploader_user_name')
@@ -108,6 +116,7 @@ module SwaggerClient
       return true if self.equal?(o)
       self.class == o.class &&
           uuid == o.uuid &&
+          filename == o.filename &&
           uploader_user_name == o.uploader_user_name &&
           date == o.date &&
           comments == o.comments &&
@@ -123,7 +132,7 @@ module SwaggerClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [uuid, uploader_user_name, date, comments, preview].hash
+      [uuid, filename, uploader_user_name, date, comments, preview].hash
     end
 
     # Builds the object from hash
