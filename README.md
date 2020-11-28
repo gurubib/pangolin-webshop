@@ -31,9 +31,9 @@ There are convenience shell scripts (_run-app.sh_, _run-db-only.sh_, _stop-app.s
 
 `NOTE: If docker can be run only in sudo mode on your system, these commands shall be run in sudo mode also.`
 
-* `run-app.sh` - Starts the application (server and db) - **IMPORTANT - The server should be built already see below**
+* `run-app.sh` - Starts the application (client, server and db) - **IMPORTANT - The server should be built already see below**
 * `run-db-only.sh` - Starts the db only
-* `stop-app.sh` - Stops the running components (works for db only and server-db combined also)
+* `stop-app.sh` - Stops the running components (works for db only and client-server-db combined also)
 
 ## Build
 The application's build tool is maven. See the README of _webshop-server_ for further details.
