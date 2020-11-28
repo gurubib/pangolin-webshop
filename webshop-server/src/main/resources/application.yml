@@ -41,7 +41,7 @@ springdoc:
 logging:
   level:
     root: info
-    hu: debug
+    hu: info
 
 pangolin:
   admin:
