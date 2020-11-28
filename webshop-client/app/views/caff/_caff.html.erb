@@ -1,0 +1,31 @@
+<div class="card">
+  <div class="card-header">
+    <title class="card-header-title"><%= caff.filename %></title>
+    <div class="level">
+      <div class="level-right">
+        <div class="level-item" style="margin-right: 20px">
+          <button class="button is-info">
+            <span>Download</span>
+            <span class="icon is-small">
+              <i class="fas fa-download"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-image is-flex is-align-content-center">
+    <img src="data:image/jpeg;base64,<%= caff.preview %>" alt="" style="margin: auto">
+  </div>
+
+  <div class="card-content">
+    <% caff.comments.each do |comment| %>
+       <%= render partial: "comment" %>
+    <% end %>
+
+
+    <%= render partial: "comment_form" %>
+  </div>
+
+</div>

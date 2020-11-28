@@ -34,6 +34,18 @@ class CaffController < ApplicationController
     end
   end
 
+  def show
+    @caff = nil
+    filename = params[:caff_filename]
+    token = session[:token]
+    resp, header = @@api_user.search filename, {:header_params => {"Authorization" => token}}
+    session[:token] = header[:Authorization]
+    if !resp.nil?
+      caff_hash = resp.results.first
+      @caff = SwaggerClient::SearchResult.build_from_hash caff_hash
+    end
+  end
+
   private
   def verify_user_logged_in
     if session[:user_uuid].nil?

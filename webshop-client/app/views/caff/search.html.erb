@@ -6,11 +6,16 @@
       <% caff_file = SwaggerClient::SearchResult.build_from_hash caff_hash %>
       <div class="column is-one-quarter">
         <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              <%= caff_file.filename %>
+            </p>
+          </header>
           <div class="card-image">
             <img src="data:image/jpeg;base64,<%= caff_file.preview %>">
           </div>
           <div class="card-footer">
-            <a href='# 'class="card-footer-item">Show</a>
+            <%= link_to "Show", show_caff_path(:caff_filename => caff_file.filename), :method => :get, class: "card-footer-item" %>
             <%= link_to "Download", download_caff_path(:caff_uuid => caff_file.uuid), :method => :get, class: "card-footer-item" %>
           </div>
         </div>
