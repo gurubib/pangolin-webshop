@@ -13,7 +13,8 @@ Next, you should provide de required passwords and secrets. There is a `.env.sam
 
 The easiest way to run the application and the db:
 * First: `./mvnw clean install -DskipTests` (building the server)
-* Second: `./run-app.sh` (deploying the whole application with docker) - Building the containers for the first time could take up several minutes (especially the pangolin-client's bundle install step - up to 10-15 minutes)
+* Second: `./first-run-app.sh` (deploying the whole application with docker) - Building the containers for the first time could take up several minutes (especially the pangolin-client's bundle install step - up to 10-15 minutes)
+Sidenote: **After** the first run you can just run `./run-app.sh`.
 
 `NOTE: To stop the application just run stop-app.sh`
 
