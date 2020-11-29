@@ -14,8 +14,6 @@ COPY Gemfile* ./
 RUN bundle install
 
 COPY . .
-RUN rails webpacker:install
-RUN npm install
 
 ENV PATH=./bin:$PATH
 CMD ["rails", "console"]
