@@ -5,7 +5,7 @@ BME - VIK - Computer Security Homework Project
 #### Generate SSL files (first time only)
 First, you have to generate a self-signed certificate in the `pangolin-client/config/` folder.
 ```
-cd pangolin-client/config/
+cd webshop-client/config/
 openssl req -x509 -sha256 -nodes -newkey rsa:2048 -days 365 -keyout localhost.key -out localhost.crt
 ```
 #### Build and run the application
