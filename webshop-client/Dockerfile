@@ -7,7 +7,6 @@ RUN gem install bundler:2.1.4
 
 WORKDIR /usr/src/app
 
-RUN npm install
 COPY package.json yarn.lock ./
 RUN yarn install --check-files
 
@@ -15,6 +14,8 @@ COPY Gemfile* ./
 RUN bundle install
 
 COPY . .
+RUN rails webpacker:install
+RUN npm install
 
 ENV PATH=./bin:$PATH
 CMD ["rails", "console"]
